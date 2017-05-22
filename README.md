@@ -1,4 +1,6 @@
 # MMrestServer
+
+[![Join the chat at https://gitter.im/kbellve/MMrestServer](https://badges.gitter.im/kbellve/MMrestServer.svg)](https://gitter.im/kbellve/MMrestServer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 A (very) basic **RESTserver** for [MicroManager](https://micro-manager.org/).
 
 ## Getting started
