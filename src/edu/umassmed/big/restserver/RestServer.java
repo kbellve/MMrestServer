@@ -1,4 +1,4 @@
-package se.karolinska.corticostriatal;
+package edu.umassmed.big.restserver;
 
 import mmcorej.CMMCore;
 import org.micromanager.api.ScriptInterface;
@@ -19,7 +19,7 @@ public class RestServer implements org.micromanager.api.MMPlugin {
 
     @Override
     public void setApp(ScriptInterface si) {
-        ReportingUtils.logMessage("REST server active on port 8000.");
+        ReportingUtils.logMessage("Bellve REST server active on port 8000.");
         RestServer.si   = si;
         RestServer.core = si.getMMCore();
         try {

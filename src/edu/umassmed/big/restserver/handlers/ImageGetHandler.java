@@ -1,8 +1,11 @@
-package se.karolinska.corticostriatal.handlers;
+package edu.umassmed.big.restserver.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+
+import edu.umassmed.big.restserver.Message;
+import edu.umassmed.big.restserver.RestServer;
 import ij.ImagePlus;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -15,8 +18,6 @@ import mmcorej.StrVector;
 import mmcorej.TaggedImage;
 import org.json.JSONObject;
 import org.micromanager.utils.ReportingUtils;
-import se.karolinska.corticostriatal.Message;
-import se.karolinska.corticostriatal.RestServer;
 
 /**
  *  Image retrieval handler. This handles REST requests for images, on the 
@@ -89,13 +90,15 @@ public class ImageGetHandler extends Handler {
      *  @throws IOException: most notably when no live image window can be read.
      */
     private String getImage () throws IOException, Exception {
-        ij.gui.ImageWindow window   = RestServer.si.getSnapLiveWin();
-        ImagePlus imagePlus         = window.getCanvas().getImage();
-        BufferedImage image         = imagePlus.getBufferedImage();
-        
+    	
         String imageFormat          = getImageFormat();
         message.payload.put("imageFormat", imageFormat);
         
+        ij.gui.ImageWindow window   = RestServer.si.getSnapLiveWin();
+  
+       	ImagePlus imagePlus         = window.getCanvas().getImage();
+        BufferedImage image         = imagePlus.getBufferedImage();
+      
         // Encode image into desired encoding, write it to byte-stream.
         ByteArrayOutputStream out   = new ByteArrayOutputStream(1000);
         ImageIO.write(image, imageFormat, out);

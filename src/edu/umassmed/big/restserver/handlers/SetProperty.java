@@ -1,15 +1,17 @@
-package se.karolinska.corticostriatal.handlers;
+package edu.umassmed.big.restserver.handlers;
 
 import com.google.gson.Gson;
+
+import edu.umassmed.big.restserver.Message;
+import edu.umassmed.big.restserver.RestServer;
+
 import java.io.IOException;
 import org.micromanager.utils.ReportingUtils;
-import se.karolinska.corticostriatal.Message;
-import se.karolinska.corticostriatal.RestServer;
 
 /**
  *  Handle change requests.
  * 
- *  @author Matthijs
+ *  @author kdb
  */
 public class SetProperty extends Handler {
 

@@ -1,4 +1,4 @@
-package se.karolinska.corticostriatal;
+package edu.umassmed.big.restserver;
 
 import com.google.gson.internal.LinkedTreeMap;
 
@@ -11,13 +11,13 @@ import com.google.gson.internal.LinkedTreeMap;
  */
 public class Message {
  
-    public String           error   = null;
-    public String           status;
-    public LinkedTreeMap    payload;
+    public String			error   = null;
+    public String			status;
+    public LinkedTreeMap	payload;
    
     
     public Message (String status) {
         this.status     = status;
-        this.payload    = new LinkedTreeMap();
+        this.payload   = new LinkedTreeMap<String, String>();
     }
 }

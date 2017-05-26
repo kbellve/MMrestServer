@@ -1,18 +1,25 @@
-package se.karolinska.corticostriatal;
+package edu.umassmed.big.restserver;
 
 import com.sun.net.httpserver.HttpServer;
+
+import edu.umassmed.big.restserver.handlers.ImageGetHandler;
+import edu.umassmed.big.restserver.handlers.ImageSingleSnapHandler;
+import edu.umassmed.big.restserver.handlers.ImageSnapandAddHandler;
+import edu.umassmed.big.restserver.handlers.ImageViewHandler;
+import edu.umassmed.big.restserver.handlers.IndexHandler;
+import edu.umassmed.big.restserver.handlers.SetAcquisition;
+import edu.umassmed.big.restserver.handlers.SetPosition;
+import edu.umassmed.big.restserver.handlers.SetProperty;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import se.karolinska.corticostriatal.handlers.ImageGetHandler;
-import se.karolinska.corticostriatal.handlers.IndexHandler;
-import se.karolinska.corticostriatal.handlers.ImageViewHandler;
-import se.karolinska.corticostriatal.handlers.SetProperty;
 
 /**
  *  HTTP service. When started, this will listen on the selected port for 
  *  incoming connections and HTTP requests.
  * 
  *  @author Matthijs
+ *  @author kdb
  */
 public class Service {
 
@@ -48,12 +55,16 @@ public class Service {
         createServer();
 
         // Internal documentation handlers:
-        server.createContext("/view/image/",    new ImageViewHandler());
-        server.createContext("/",               new IndexHandler());
+        (server.createContext("/snap/image/",    	new ImageSingleSnapHandler())).getFilters().add(new ParameterFilter());
+        (server.createContext("/snap/imageandadd/", new ImageSnapandAddHandler())).getFilters().add(new ParameterFilter());
+        server.createContext("/view/image/",    	new ImageViewHandler());
+        server.createContext("/",               	new IndexHandler());
         
         // SET / GET request handlers:
-        (server.createContext("/get/image/",    new ImageGetHandler())).getFilters().add(new ParameterFilter());
-        (server.createContext("/set/property/", new SetProperty())).getFilters().add(new ParameterFilter());        
+        (server.createContext("/get/image/",    	new ImageGetHandler())).getFilters().add(new ParameterFilter());
+        (server.createContext("/set/property/", 	new SetProperty())).getFilters().add(new ParameterFilter());
+        (server.createContext("/set/position/", 	new SetPosition())).getFilters().add(new ParameterFilter());
+        (server.createContext("/set/acquisition/", 	new SetAcquisition())).getFilters().add(new ParameterFilter());
     }
     
     

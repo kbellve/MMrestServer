@@ -1,4 +1,4 @@
-package se.karolinska.corticostriatal;
+package edu.umassmed.big.restserver;
 
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.Filter.Chain;

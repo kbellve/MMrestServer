@@ -1,12 +1,14 @@
-package se.karolinska.corticostriatal.handlers;
+package edu.umassmed.big.restserver.handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+
+import edu.umassmed.big.restserver.Message;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
 import org.micromanager.utils.ReportingUtils;
-import se.karolinska.corticostriatal.Message;
 
 /**
  *  Handle GET (retrieval) requests. These should never modify anything, only

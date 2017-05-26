@@ -1,4 +1,4 @@
-package se.karolinska.corticostriatal.handlers;
+package edu.umassmed.big.restserver.handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
