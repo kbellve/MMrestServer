@@ -28,7 +28,6 @@ public class GetProperty extends Handler {
             String label        = params.get("label").toString();
             String propName     = params.get("propName").toString();
            
-            
             message = new Message(RestServer.core.getProperty(label, propName));
             
         } catch (MissingKeyException e) {
