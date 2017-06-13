@@ -1,11 +1,11 @@
-package edu.umassmed.big.restserver.handlers;
+package edu.umassmed.big.mmremote.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
-import edu.umassmed.big.restserver.Message;
-import edu.umassmed.big.restserver.RestServer;
+import edu.umassmed.big.mmremote.Message;
+import edu.umassmed.big.mmremote.RestServer;
 import ij.ImagePlus;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;

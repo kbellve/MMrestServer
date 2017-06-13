@@ -1,9 +1,9 @@
-package edu.umassmed.big.restserver.handlers;
+package edu.umassmed.big.mmremote.handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-import edu.umassmed.big.restserver.Message;
+import edu.umassmed.big.mmremote.Message;
 
 import java.io.IOException;
 import java.io.OutputStream;

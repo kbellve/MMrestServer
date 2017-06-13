@@ -1,9 +1,9 @@
-package edu.umassmed.big.restserver.handlers;
+package edu.umassmed.big.mmremote.handlers;
 
 import com.google.gson.Gson;
 
-import edu.umassmed.big.restserver.Message;
-import edu.umassmed.big.restserver.RestServer;
+import edu.umassmed.big.mmremote.Message;
+import edu.umassmed.big.mmremote.RestServer;
 
 import java.io.IOException;
 import org.micromanager.utils.ReportingUtils;

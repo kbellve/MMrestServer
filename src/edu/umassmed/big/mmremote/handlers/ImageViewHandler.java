@@ -1,4 +1,4 @@
-package edu.umassmed.big.restserver.handlers;
+package edu.umassmed.big.mmremote.handlers;
 
 import java.io.InputStream;
 

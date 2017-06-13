@@ -1,4 +1,4 @@
-package edu.umassmed.big.restserver;
+package edu.umassmed.big.mmremote;
 
 import mmcorej.CMMCore;
 import org.micromanager.api.ScriptInterface;
@@ -10,6 +10,7 @@ import org.micromanager.utils.ReportingUtils;
  *  some day manipulate it.
  * 
  *  @author Matthijs Dorst, Karolinska Institutet, Stockholm, Sweden.
+ *	@author Karl Bellve, Biomedical Imaging Group, University of Massachusetts Medical School, Worcester, MA USA
  */
 public class RestServer implements org.micromanager.api.MMPlugin {
 
@@ -19,7 +20,7 @@ public class RestServer implements org.micromanager.api.MMPlugin {
 
     @Override
     public void setApp(ScriptInterface si) {
-        ReportingUtils.logMessage("Bellve REST server active on port 8000.");
+        ReportingUtils.logMessage("Ready for control by KNIME, active on port 8000.");
         RestServer.si   = si;
         RestServer.core = si.getMMCore();
         try {
@@ -41,6 +42,6 @@ public class RestServer implements org.micromanager.api.MMPlugin {
     @Override public String getDescription() { return "Enable external access to MM data."; }
     @Override public String getInfo()        { return "REST-full interface server.";        }
     @Override public String getVersion()     { return "1";               }
-    @Override public String getCopyright()   { return "Matthijs Dorst";  }
+    @Override public String getCopyright()   { return "Matthijs Dorst and Karl Bellve under MIT License";  }
     @Override public void dispose()          {                           }    
 }

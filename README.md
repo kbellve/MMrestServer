@@ -1,3 +1,11 @@
+
+
+# This is a fork of Matt Neuro's Rest Server project
+
+# Code written by Matt Neuro is being used under the MIT License, which is included.
+
+# Code written by Karl Bellve is also under the MIT License, which is included.
+
 # MMrestServer
 A (very) basic **RESTserver** for [MicroManager](https://micro-manager.org/).
 

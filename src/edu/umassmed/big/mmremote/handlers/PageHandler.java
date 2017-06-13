@@ -1,4 +1,4 @@
-package edu.umassmed.big.restserver.handlers;
+package edu.umassmed.big.mmremote.handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;

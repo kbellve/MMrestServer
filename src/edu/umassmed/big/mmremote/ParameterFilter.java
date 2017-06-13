@@ -1,4 +1,4 @@
-package edu.umassmed.big.restserver;
+package edu.umassmed.big.mmremote;
 
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.Filter.Chain;

@@ -1,4 +1,4 @@
-package edu.umassmed.big.restserver;
+package edu.umassmed.big.mmremote;
 
 import com.google.gson.internal.LinkedTreeMap;
 

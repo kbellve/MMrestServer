@@ -1,15 +1,15 @@
-package edu.umassmed.big.restserver;
+package edu.umassmed.big.mmremote;
 
 import com.sun.net.httpserver.HttpServer;
 
-import edu.umassmed.big.restserver.handlers.ImageGetHandler;
-import edu.umassmed.big.restserver.handlers.ImageSingleSnapHandler;
-import edu.umassmed.big.restserver.handlers.ImageSnapandAddHandler;
-import edu.umassmed.big.restserver.handlers.ImageViewHandler;
-import edu.umassmed.big.restserver.handlers.IndexHandler;
-import edu.umassmed.big.restserver.handlers.SetAcquisition;
-import edu.umassmed.big.restserver.handlers.SetPosition;
-import edu.umassmed.big.restserver.handlers.SetProperty;
+import edu.umassmed.big.mmremote.handlers.ImageGetHandler;
+import edu.umassmed.big.mmremote.handlers.ImageSingleSnapHandler;
+import edu.umassmed.big.mmremote.handlers.ImageSnapandAddHandler;
+import edu.umassmed.big.mmremote.handlers.ImageViewHandler;
+import edu.umassmed.big.mmremote.handlers.IndexHandler;
+import edu.umassmed.big.mmremote.handlers.SetAcquisition;
+import edu.umassmed.big.mmremote.handlers.SetPosition;
+import edu.umassmed.big.mmremote.handlers.SetProperty;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
