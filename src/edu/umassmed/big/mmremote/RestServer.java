@@ -39,7 +39,7 @@ public class RestServer implements org.micromanager.api.MMPlugin {
     /**
      *  General purpose information members.
      */
-    @Override public String getDescription() { return "Enable external access to MM data."; }
+    @Override public String getDescription() { return "Allows KNIME to control MM via KNIME REST Nodes"; }
     @Override public String getInfo()        { return "REST-full interface server.";        }
     @Override public String getVersion()     { return "1";               }
     @Override public String getCopyright()   { return "Matthijs Dorst and Karl Bellve under MIT License";  }

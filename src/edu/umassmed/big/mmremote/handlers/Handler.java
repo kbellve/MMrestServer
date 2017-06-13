@@ -4,6 +4,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import edu.umassmed.big.mmremote.Message;
+import edu.umassmed.big.mmremote.RestServer;
 
 import java.io.IOException;
 import java.io.OutputStream;

@@ -3,6 +3,7 @@ package edu.umassmed.big.mmremote;
 import com.sun.net.httpserver.HttpServer;
 
 import edu.umassmed.big.mmremote.handlers.ImageGetHandler;
+import edu.umassmed.big.mmremote.handlers.BusyHandler;
 import edu.umassmed.big.mmremote.handlers.ImageSingleSnapHandler;
 import edu.umassmed.big.mmremote.handlers.ImageSnapandAddHandler;
 import edu.umassmed.big.mmremote.handlers.ImageViewHandler;
@@ -10,6 +11,7 @@ import edu.umassmed.big.mmremote.handlers.IndexHandler;
 import edu.umassmed.big.mmremote.handlers.SetAcquisition;
 import edu.umassmed.big.mmremote.handlers.SetPosition;
 import edu.umassmed.big.mmremote.handlers.SetProperty;
+import edu.umassmed.big.mmremote.handlers.GetProperty;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -61,7 +63,9 @@ public class Service {
         server.createContext("/",               	new IndexHandler());
         
         // SET / GET request handlers:
+        (server.createContext("/get/busy/",    		new BusyHandler())).getFilters().add(new ParameterFilter());
         (server.createContext("/get/image/",    	new ImageGetHandler())).getFilters().add(new ParameterFilter());
+        (server.createContext("/get/property/", 	new GetProperty())).getFilters().add(new ParameterFilter());
         (server.createContext("/set/property/", 	new SetProperty())).getFilters().add(new ParameterFilter());
         (server.createContext("/set/position/", 	new SetPosition())).getFilters().add(new ParameterFilter());
         (server.createContext("/set/acquisition/", 	new SetAcquisition())).getFilters().add(new ParameterFilter());

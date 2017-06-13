@@ -27,6 +27,7 @@ public class SetPosition extends Handler {
             if (!params.containsKey("X") && !params.containsKey("Y") && !params.containsKey("Z")
             		&& !params.containsKey("Home") && !params.containsKey("Origin"))
                 throw new MissingKeyException();
+           
             
             dXpos = RestServer.core.getXPosition();
             dYpos = RestServer.core.getYPosition();
