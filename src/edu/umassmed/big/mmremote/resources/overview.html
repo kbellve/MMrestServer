@@ -64,7 +64,7 @@ tr:nth-child(odd) {
     </head>
     <body>
         <img id="testLive">
-        <h1>MicroManager REST API Overview</h1>
+        <h1>µManager REST API Overview</h1>
         
         <div>
             <h2>Data format</h2>
@@ -142,10 +142,12 @@ tr:nth-child(odd) {
             <br>
             <br>
             
-            Currently permissable GET operations are:
+            Currently permissible GET operations are:
             
             <ul>
+            	<li><a href="#getBusy">/get/busy/</a></li>
                 <li><a href="#getImage">/get/image/</a></li>
+                <li><a href="#getProperty">/get/property/</a></li>
             </ul>
             
             
@@ -162,6 +164,8 @@ tr:nth-child(odd) {
             Currently permissable POST operations are:
             
             <ul>
+                <li><a href="#setAcquisition">/set/acquisition/</a></li>
+                <li><a href="#setPosition">/set/position/</a></li>
                 <li><a href="#setProperty">/set/property/</a></li>
             </ul>
             
@@ -171,6 +175,80 @@ tr:nth-child(odd) {
         <h1>
             Implementation Details
         </h1>
+        
+        <div>
+            <h2><a name="getBusy" href="/get/busy/">/get/busy/</a></h2>
+            Check if µManager or a specific µManager device is busy. This is a generic property getter without bounds
+            checking, ergo, changing properties that require the camera or stage to be
+            offline will not ensure that this is the case. 
+            
+            <br><br>
+            
+            Currently, this defaults to integer properties, though could be adapted
+            in the future for all property types.
+            
+            <br><br>
+            
+            Note that device and property names are <b>CaSe SeNsItiVe</b>.
+            
+            <br><br>
+            
+            <i>Examples:</i> 
+            <span>
+                Check if the <i>DCam</i> device is busy:
+                <br>
+				<a href="http://localhost:8000/get/busy/?device=DCam">
+                    http://localhost:8000/get/busy/?device=DCam
+                </a>
+                <br>
+                <br>
+                Check if <i>µManager</i> is busy:
+                <br>
+              	<a href="http://localhost:8000/get/busy/">
+                    http://localhost:8000/get/busy/
+                </a>
+                <br><br>
+            </span>
+            
+            <table>
+                <tr>
+                    <th>
+                        Field
+                    </th>
+                    <th>
+                        Prevalence
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        device
+                    </td>
+                    <td>
+                        <i>Required</i>
+                    </td>
+                    <td>
+                        [String] The device to change a property for. 
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        property
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [String] Name of the property to return to check if busy. If this parameter is not included, it will check if any device is busy.
+                        This appears to be blocking but it might depend upon the device being queried. In other words, it will always return FALSE because
+                        it returns once a device is no longer busy.
+                    </td>
+                </tr>           
+            </table>
+        </div> 
+        
         <div>
             <h2><a name="getImage" href="/get/image/">/get/image/</a></h2>
             Retrieve the current live image. By default, this is encoded as a
@@ -235,32 +313,31 @@ tr:nth-child(odd) {
                 </tr>                 
             </table>
         </div>
-        
-        <div>
-            <h2><a name="setProperty" href="/set/property/">/set/property/</a></h2>
-            Set an MMCore parameter. This is a generic property setter without bounds
+            <div>
+            <h2><a name="getProperty" href="/get/property/">/get/property/</a></h2>
+            Get a single or multiple µManagerCore device parameter. This is a generic property getter without bounds
             checking, ergo, changing properties that require the camera or stage to be
             offline will not ensure that this is the case. 
             
             <br><br>
             
-            Currently, this defaults to integer properties, though could be adepted
+            Currently, this defaults to integer properties, though could be adapted
             in the future for all property types.
             
             <br><br>
             
-            Note that labels and property names are <b>CaSe SeNsItiVe</b>.
+            Note that device and property names are <b>CaSe SeNsItiVe</b>.
             
             <br><br>
             
             <i>Example:</i> 
             <span>
-                <a href="http://localhost:8000/set/property/?label=DCam&propName=Exposure&propValue=10">
-                    http://localhost:8000/set/property/?label=DCam&propName=Exposure&propValue=10
+            	Get the <i>Exposure</i> time of the <i>DCam</i> device:
+				<br>
+                <a href="http://localhost:8000/get/property/?device=DCam&property=Exposure">
+                    http://localhost:8000/get/property/?device=DCam&property=Exposure
                 </a>
-                <br>
-                <br>
-                Set the <i>Exposure</i> time of the <i>DCam</i> device to <i>10</i> ms.
+                <br><br>
             </span>
 
             
@@ -278,7 +355,7 @@ tr:nth-child(odd) {
                 </tr>
                 <tr>
                     <td>
-                        label
+                        device
                     </td>
                     <td>
                         <i>Required</i>
@@ -289,7 +366,201 @@ tr:nth-child(odd) {
                 </tr>
                 <tr>
                     <td>
-                        propName
+                        property
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [String] Name of the property to return. If this parameter is not included, it will return every property and its value.
+                        To find out which property names are permitted for a specified device, the core function getDevicePropertyNames can be used.
+                        Alternatively, the <i>Tools > Device Property Browser</i> should list the same values.
+                    </td>
+                </tr>           
+            </table>
+        </div> 
+        <div>
+            <h2><a name="setAcquisition" href="/set/acquisition/">/set/acquisition/</a></h2>
+            Set the paramaters to an acquisition but doesn't start that acquisiton. 
+            
+            <br><br>
+            
+            Currently, this only appears to work with µManager 1.4 and not 2.0
+            
+            <br><br>
+            
+            Note that labels and property names are <b>CaSe SeNsItiVe</b>.
+            
+            <br><br>
+            
+            <i>Example:</i> 
+            <span>
+            	Set the <i>Exposure</i> time of the <i>DCam</i> device to <i>10</i> ms:
+                <br>
+                <a href="http://localhost:8000/set/acqusition/?name=test&directory=tmp&frames=10&channels=1&slices=10&positions=0&show=1&save=1">
+                    http://localhost:8000/set/acqusition/?name=test&directory=tmp&frames=10&channels=1&slices=10&positions=0&show=1&save=1
+                </a>
+                <br><br>
+            </span>
+
+            
+            <table>
+                <tr>
+                    <th>
+                        Field
+                    </th>
+                    <th>
+                        Prevalence
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        name
+                    </td>
+                    <td>
+                        <i>Required</i>
+                    </td>
+                    <td>
+                        [String] The filename that will be used for saving the acquisition. 
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        directory
+                    </td>
+                    <td>
+                        <i>Required</i>
+                    </td>
+                    <td>
+                        [String] The directory that the acquistion will be saved in.
+                    </td>
+                </tr> 
+                <tr>
+                    <td>
+                        frames
+                    </td>
+                    <td>
+                        <i>Required</i>
+                    </td>
+                    <td>
+                        [Int] The number of frames to collect
+                    </td>
+                </tr>    
+                <tr>
+                    <td>
+                        channels
+                    </td>
+                    <td>
+                        <i>Required</i>
+                    </td>
+                    <td>
+                        [Int] The number of channels to collect
+                    </td>
+                </tr>  
+                <tr>
+                    <td>
+                        slices
+                    </td>
+                    <td>
+                        <i>Required</i>
+                    </td>
+                    <td>
+                        [Int] The number of slices to collect
+                    </td>
+                </tr> 
+                <tr>
+                    <td>
+                        positions
+                    </td>
+                    <td>
+                        <i>Required</i>
+                    </td>
+                    <td>
+                        [Int] The number of XY positions to collect
+                    </td>
+                </tr>
+                    <tr>
+                    <td>
+                        show
+                    </td>
+                    <td>
+                        <i>Required</i>
+                    </td>
+                    <td>
+                        [0:1] Show images during acquisition
+                    </td>
+                </tr>  
+                    <tr>
+                    <td>
+                        save
+                    </td>
+                    <td>
+                        <i>Required</i>
+                    </td>
+                    <td>
+                        [0:1] Save images during acquisition
+                    </td>
+                </tr>    
+                                      
+            </table>
+        </div>        
+        <div>
+            <h2><a name="setProperty" href="/set/property/">/set/property/</a></h2>
+            Set an µManagerCore parameter. This is a generic property setter without bounds
+            checking, ergo, changing properties that require the camera or stage to be
+            offline will not ensure that this is the case. 
+            
+            <br><br>
+            
+            Currently, this defaults to integer properties, though could be adepted
+            in the future for all property types.
+            
+            <br><br>
+            
+            Note that labels and property names are <b>CaSe SeNsItiVe</b>.
+            
+            <br><br>
+            
+            <i>Example:</i> 
+            <span>
+            	Set the <i>Exposure</i> time of the <i>DCam</i> device to <i>10</i> ms:
+                <br>
+                <a href="http://localhost:8000/set/property/?device=DCam&property=Exposure&value=10">
+                    http://localhost:8000/set/property/?device=DCam&property=Exposure&value=10
+                </a>
+                <br><br>
+            </span>
+
+            
+            <table>
+                <tr>
+                    <th>
+                        Field
+                    </th>
+                    <th>
+                        Prevalence
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        device
+                    </td>
+                    <td>
+                        <i>Required</i>
+                    </td>
+                    <td>
+                        [String] The device to change a property for. 
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        property
                     </td>
                     <td>
                         <i>Required</i>
@@ -302,7 +573,7 @@ tr:nth-child(odd) {
                 </tr> 
                 <tr>
                     <td>
-                        propValue
+                        value
                     </td>
                     <td>
                         <i>Required</i>
