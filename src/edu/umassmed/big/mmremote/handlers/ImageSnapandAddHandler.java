@@ -7,7 +7,7 @@ import org.micromanager.utils.ReportingUtils;
 import com.google.gson.Gson;
 
 import edu.umassmed.big.mmremote.Message;
-import edu.umassmed.big.mmremote.RestServer;
+import edu.umassmed.big.mmremote.µmKNIME;
 
 
 /**
@@ -30,7 +30,7 @@ public class ImageSnapandAddHandler  extends Handler {
             
             if (!params.containsKey("exposure")) {
             	double exposure = Double.parseDouble(params.get("exposure").toString());
-            	RestServer.core.setExposure(exposure);
+            	µmKNIME.core.setExposure(exposure);
             }
         
             String name   	= params.get("name").toString();
@@ -40,7 +40,7 @@ public class ImageSnapandAddHandler  extends Handler {
             int position    = Integer.parseInt(params.get("position").toString());
             
             ReportingUtils.logMessage("Snapping a single image, with optional exposure, and adding it to an acquisition in the correct position.");
-            RestServer.si.snapAndAddImage(name, frame, channel, slice, position);
+            µmKNIME.si.snapAndAddImage(name, frame, channel, slice, position);
            
 
         } catch (MissingKeyException e) {

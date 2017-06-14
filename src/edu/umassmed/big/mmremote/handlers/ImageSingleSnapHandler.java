@@ -7,7 +7,7 @@ import org.micromanager.utils.ReportingUtils;
 import com.google.gson.Gson;
 
 import edu.umassmed.big.mmremote.Message;
-import edu.umassmed.big.mmremote.RestServer;
+import edu.umassmed.big.mmremote.µmKNIME;
 
 /**
  *  
@@ -27,10 +27,10 @@ public class ImageSingleSnapHandler  extends Handler {
             // Optionally change exposure before snapping image
             if (!params.containsKey("exposure")) {
             	double exposure = Double.parseDouble(params.get("exposure").toString());
-            	RestServer.core.setExposure(exposure);
+            	µmKNIME.core.setExposure(exposure);
             }
             
-            RestServer.si.snapSingleImage();
+            µmKNIME.si.snapSingleImage();
         } catch (Exception e) {
             message         = new Message("ERROR");
             message.error   = "Could not handle Snap Image request.";

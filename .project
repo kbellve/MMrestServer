@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>dist/µmKNIME.jar</name>
+			<type>1</type>
+			<location>/storage/big1/kdb/java/µmKNIME.jar</location>
+		</link>
+	</linkedResources>
 </projectDescription>

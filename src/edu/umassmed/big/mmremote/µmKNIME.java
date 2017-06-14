@@ -12,7 +12,7 @@ import org.micromanager.utils.ReportingUtils;
  *  @author Matthijs Dorst, Karolinska Institutet, Stockholm, Sweden.
  *	@author Karl Bellve, Biomedical Imaging Group, University of Massachusetts Medical School, Worcester, MA USA
  */
-public class RestServer implements org.micromanager.api.MMPlugin {
+public class µmKNIME implements org.micromanager.api.MMPlugin {
 
     public static ScriptInterface   si      = null;
     public static CMMCore           core    = null;
@@ -21,8 +21,8 @@ public class RestServer implements org.micromanager.api.MMPlugin {
     @Override
     public void setApp(ScriptInterface si) {
         ReportingUtils.logMessage("Ready for control by KNIME, active on port 8000.");
-        RestServer.si   = si;
-        RestServer.core = si.getMMCore();
+        µmKNIME.si   = si;
+        µmKNIME.core = si.getMMCore();
         try {
             Service.start();
         } catch (Exception e) {

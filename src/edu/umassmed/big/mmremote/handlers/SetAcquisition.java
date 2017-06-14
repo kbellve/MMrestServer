@@ -3,7 +3,7 @@ package edu.umassmed.big.mmremote.handlers;
 import com.google.gson.Gson;
 
 import edu.umassmed.big.mmremote.Message;
-import edu.umassmed.big.mmremote.RestServer;
+import edu.umassmed.big.mmremote.µmKNIME;
 
 import java.io.IOException;
 import org.micromanager.utils.ReportingUtils;
@@ -36,7 +36,7 @@ public class SetAcquisition extends Handler {
             boolean show    	= Boolean.parseBoolean(params.get("show").toString());
             boolean save    	= Boolean.parseBoolean(params.get("save").toString()); 
             
-            RestServer.si.openAcquisition(name,  directory, frames, channels, slices, positions, show, save);
+            µmKNIME.si.openAcquisition(name,  directory, frames, channels, slices, positions, show, save);
 
             
         } catch (MissingKeyException e) {

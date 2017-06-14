@@ -3,7 +3,7 @@ package edu.umassmed.big.mmremote.handlers;
 import com.google.gson.Gson;
 
 import edu.umassmed.big.mmremote.Message;
-import edu.umassmed.big.mmremote.RestServer;
+import edu.umassmed.big.mmremote.µmKNIME;
 
 import java.io.IOException;
 import org.micromanager.utils.ReportingUtils;
@@ -22,20 +22,20 @@ public class SetProperty extends Handler {
         
         try {
             message         = new Message("OK");
-            if (!params.containsKey("label") || !params.containsKey("propName") || !params.containsKey("propValue"))
+            if (!params.containsKey("device") || !params.containsKey("property") || !params.containsKey("value"))
                 throw new MissingKeyException();
         
-            String label        = params.get("label").toString();
-            String propName     = params.get("propName").toString();
-            String propValue    = params.get("propValue").toString();
+            String label        = params.get("device").toString();
+            String propName     = params.get("property").toString();
+            String propValue    = params.get("value").toString();
             
-            RestServer.core.setProperty(label, propName, Integer.parseInt(propValue));
+            µmKNIME.core.setProperty(label, propName, Integer.parseInt(propValue));
             
             
             
         } catch (MissingKeyException e) {
             message         = new Message("ERROR");
-            message.error   = "SetProperty requests require the fields 'label', 'propName' and 'propValue' to be set.";
+            message.error   = "SetProperty requests require the fields 'device', 'property' and 'value' to be set.";
         } catch (Exception e) {
             message         = new Message("ERROR");
             message.error   = "Could not handle SET request.";

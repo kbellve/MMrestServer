@@ -3,7 +3,7 @@ package edu.umassmed.big.mmremote.handlers;
 import com.google.gson.Gson;
 
 import edu.umassmed.big.mmremote.Message;
-import edu.umassmed.big.mmremote.RestServer;
+import edu.umassmed.big.mmremote.µmKNIME;
 
 import java.io.IOException;
 import org.micromanager.utils.ReportingUtils;
@@ -29,38 +29,38 @@ public class SetPosition extends Handler {
                 throw new MissingKeyException();
            
             
-            dXpos = RestServer.core.getXPosition();
-            dYpos = RestServer.core.getYPosition();
-            dZpos = RestServer.core.getPosition();
+            dXpos = µmKNIME.core.getXPosition();
+            dYpos = µmKNIME.core.getYPosition();
+            dZpos = µmKNIME.core.getPosition();
             
             if (params.containsKey("X")) {
             	dXpos  = Double.parseDouble(params.get("X").toString());
             	ReportingUtils.logMessage("Setting X Postion to: " + dXpos);
-            	RestServer.core.setXYPosition(dXpos, dYpos);
+            	µmKNIME.core.setXYPosition(dXpos, dYpos);
             }
             if (params.containsKey("Y")) {
             	dYpos  = Double.parseDouble(params.get("Y").toString());
             	ReportingUtils.logMessage("Setting Y Postion to: " + dYpos);
-            	RestServer.core.setXYPosition(dXpos, dYpos);
+            	µmKNIME.core.setXYPosition(dXpos, dYpos);
             }
             if (params.containsKey("Z")) {
             	dZpos  = Double.parseDouble(params.get("Z").toString());
             	ReportingUtils.logMessage("Setting Z Postion to: " + dZpos);
-            	RestServer.core.setPosition(dZpos);
+            	µmKNIME.core.setPosition(dZpos);
             }
             
             if (params.containsKey("Home")) {
             	if (params.get("Home").toString() == "XY")
-            		RestServer.core.home(RestServer.core.getXYStageDevice());
+            		µmKNIME.core.home(µmKNIME.core.getXYStageDevice());
             	if (params.get("Home").toString() == "Z")
-            		RestServer.core.home(RestServer.core.getFocusDevice());
+            		µmKNIME.core.home(µmKNIME.core.getFocusDevice());
             }
             
             if (params.containsKey("Origin")) {
             	if (params.get("Origin").toString() == "XY")
-            		RestServer.core.setOriginXY();
+            		µmKNIME.core.setOriginXY();
             	if (params.get("Origin").toString() == "Z")
-            		RestServer.core.setOrigin();
+            		µmKNIME.core.setOrigin();
             }
         
             

@@ -3,7 +3,7 @@ package edu.umassmed.big.mmremote.handlers;
 import com.google.gson.Gson;
 
 import edu.umassmed.big.mmremote.Message;
-import edu.umassmed.big.mmremote.RestServer;
+import edu.umassmed.big.mmremote.µmKNIME;
 
 import java.io.IOException;
 import org.micromanager.utils.ReportingUtils;
@@ -30,12 +30,12 @@ public class BusyHandler extends Handler {
             if (params.containsKey("device")) {
             	String name        	= params.get("device").toString();
             	ReportingUtils.logMessage("Checking if " + name + " is busy");
-            	if (RestServer.core.deviceBusy(name) == true) message = new Message ("TRUE");
+            	if (µmKNIME.core.deviceBusy(name) == true) message = new Message ("TRUE");
             	else message = new Message ("FALSE");
             }
             else {
             	ReportingUtils.logMessage("Checking if µManager is busy");
-            	if (RestServer.core.systemBusy() == true) message = new Message ("TRUE");
+            	if (µmKNIME.core.systemBusy() == true) message = new Message ("TRUE");
             	else message = new Message ("FALSE");
             }
             

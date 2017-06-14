@@ -5,7 +5,7 @@ import com.google.gson.internal.LinkedTreeMap;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 import edu.umassmed.big.mmremote.Message;
-import edu.umassmed.big.mmremote.RestServer;
+import edu.umassmed.big.mmremote.µmKNIME;
 import ij.ImagePlus;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -68,12 +68,12 @@ public class ImageGetHandler extends Handler {
             return;
         
         String      value;
-        String      camera      = RestServer.core.getCameraDevice();
-        StrVector   properties  = RestServer.core.getDevicePropertyNames(camera);
+        String      camera      = µmKNIME.core.getCameraDevice();
+        StrVector   properties  = µmKNIME.core.getDevicePropertyNames(camera);
         LinkedTreeMap map       = new LinkedTreeMap();
         
         for (String property : properties) {
-            value = RestServer.core.getProperty(camera, property);
+            value = µmKNIME.core.getProperty(camera, property);
             map.put(property, value);
         }
         message.payload.put("cameraProperties", map);
@@ -94,7 +94,7 @@ public class ImageGetHandler extends Handler {
         String imageFormat          = getImageFormat();
         message.payload.put("imageFormat", imageFormat);
         
-        ij.gui.ImageWindow window   = RestServer.si.getSnapLiveWin();
+        ij.gui.ImageWindow window   = µmKNIME.si.getSnapLiveWin();
   
        	ImagePlus imagePlus         = window.getCanvas().getImage();
         BufferedImage image         = imagePlus.getBufferedImage();
@@ -120,7 +120,7 @@ public class ImageGetHandler extends Handler {
             return;
         
         LinkedTreeMap   map     = new LinkedTreeMap();
-        TaggedImage     image   = RestServer.core.getLastTaggedImage();
+        TaggedImage     image   = µmKNIME.core.getLastTaggedImage();
         JSONObject      tags    = image.tags;
         
         for (Iterator<String> iterator = tags.keys(); iterator.hasNext(); ) {
