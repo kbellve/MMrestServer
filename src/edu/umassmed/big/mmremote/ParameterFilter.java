@@ -1,7 +1,6 @@
 package edu.umassmed.big.mmremote;
 
 import com.sun.net.httpserver.Filter;
-import com.sun.net.httpserver.Filter.Chain;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.BufferedReader;
 import java.io.IOException;

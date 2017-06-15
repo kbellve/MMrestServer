@@ -13,7 +13,7 @@ import org.micromanager.utils.ReportingUtils;
  * 
  *  @author kdb
  */
-public class SetAcquisition extends Handler {
+public class AcquisitionHandler extends Handler {
 
     
     @Override
@@ -21,10 +21,11 @@ public class SetAcquisition extends Handler {
         ReportingUtils.logMessage("Opening an Acquisition");
         
         try {
+        	boolean show = true;
+        	boolean save = true;
             message         = new Message("OK");
             if (!params.containsKey("name") || !params.containsKey("directory") || !params.containsKey("frames")
-             || !params.containsKey("channels") || !params.containsKey("slices") || !params.containsKey("positions")
-             || !params.containsKey("show") || !params.containsKey("save"))
+             || !params.containsKey("channels") || !params.containsKey("slices") || !params.containsKey("positions"))
                 throw new MissingKeyException();
             
             String name        	= params.get("name").toString();
@@ -33,11 +34,11 @@ public class SetAcquisition extends Handler {
             int channels    	= Integer.parseInt(params.get("channels").toString());
             int slices    		= Integer.parseInt(params.get("slices").toString());
             int positions   	= Integer.parseInt(params.get("positions").toString());
-            boolean show    	= Boolean.parseBoolean(params.get("show").toString());
-            boolean save    	= Boolean.parseBoolean(params.get("save").toString()); 
+            if (params.containsKey("show")) show = Boolean.parseBoolean(params.get("show").toString());
+            if (params.containsKey("save")) save = Boolean.parseBoolean(params.get("save").toString()); 
             
             µmKNIME.si.openAcquisition(name,  directory, frames, channels, slices, positions, show, save);
-
+            
             
         } catch (MissingKeyException e) {
             message         = new Message("ERROR");

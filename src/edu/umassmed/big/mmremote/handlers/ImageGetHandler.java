@@ -42,7 +42,6 @@ public class ImageGetHandler extends Handler {
             
             if (params.containsKey("cameraProperties"))
                 loadCameraProperties();
-            
             if (params.containsKey("tags"))
                 loadImageTags();            
         } catch (Exception e) {

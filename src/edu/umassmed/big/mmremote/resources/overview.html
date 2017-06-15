@@ -156,17 +156,33 @@ tr:nth-child(odd) {
         <div>          
             <h2>SET requests</h2>
             SET requests update the system state. They could be used to modify
-            camera settings, stage configuration, etc. 
+            camera settings, stage configuration, set up future acquisition  etc. 
             
             <br>
             <br> 
             
-            Currently permissable POST operations are:
+            Currently permissible POST operations are:
             
             <ul>
-                <li><a href="#setAcquisition">/set/acquisition/</a></li>
+            	<li><a href="#setAcquisition">/set/acquisition/</a></li>
                 <li><a href="#setPosition">/set/position/</a></li>
                 <li><a href="#setProperty">/set/property/</a></li>
+            </ul>
+            
+        </div>
+        
+         <div>          
+            <h2>Acquire requests</h2>
+            ACQUIRE requests µManager to snap a single image.  
+           
+            <br>
+            <br> 
+            
+            Currently permissible POST operations are:
+            
+            <ul>
+                <li><a href="#acquireImage">/acquire/image/</a></li>
+                <li><a href="#acquireImageandAdd">/acquire/imageandadd/</a></li>
             </ul>
             
         </div>
@@ -381,7 +397,7 @@ tr:nth-child(odd) {
         </div> 
         <div>
             <h2><a name="setAcquisition" href="/set/acquisition/">/set/acquisition/</a></h2>
-            Set the paramaters to an acquisition but doesn't start that acquisiton. 
+            Set the parameters to an acquisition but doesn't start that acquisition. 
             
             <br><br>
             
@@ -397,8 +413,8 @@ tr:nth-child(odd) {
             <span>
             	Set the <i>Exposure</i> time of the <i>DCam</i> device to <i>10</i> ms:
                 <br>
-                <a href="http://localhost:8000/set/acqusition/?name=test&directory=tmp&frames=10&channels=1&slices=10&positions=0&show=1&save=1">
-                    http://localhost:8000/set/acqusition/?name=test&directory=tmp&frames=10&channels=1&slices=10&positions=0&show=1&save=1
+                <a href="http://localhost:8000/set/acquisition/?name=test&directory=tmp&frames=10&channels=1&slices=10&positions=1show=true&save=true">
+                    http://localhost:8000/set/acquisition/?name=test&directory=tmp&frames=10&channels=1&slices=10&positions=1&show=true&save=true
                 </a>
                 <br><br>
             </span>
@@ -487,10 +503,10 @@ tr:nth-child(odd) {
                         show
                     </td>
                     <td>
-                        <i>Required</i>
+                        <i>Optional</i>
                     </td>
                     <td>
-                        [0:1] Show images during acquisition
+                        [<b>true</b>:false] Show images during acquisition
                     </td>
                 </tr>  
                     <tr>
@@ -498,10 +514,10 @@ tr:nth-child(odd) {
                         save
                     </td>
                     <td>
-                        <i>Required</i>
+                        <i>Optional</i>
                     </td>
                     <td>
-                        [0:1] Save images during acquisition
+                        [<b>true</b>:false] Save images during acquisition
                     </td>
                 </tr>    
                                       
@@ -515,7 +531,7 @@ tr:nth-child(odd) {
             
             <br><br>
             
-            Currently, this defaults to integer properties, though could be adepted
+            Currently, this defaults to integer properties, though could be adapted
             in the future for all property types.
             
             <br><br>
@@ -584,6 +600,165 @@ tr:nth-child(odd) {
                             setProperty(java.lang.String label, java.lang.String propName, int propValue)</a> call.
                     </td>
                 </tr>                 
+            </table>
+        </div>        
+        <div>
+            <h2><a name="acquireImage" href="/acquire/image/">/acquire/image/</a></h2>
+            Instructs µManager to acquire a single image with the current settings, optionally changing the exposure 
+            
+            <br><br>
+            
+            Currently, this defaults to integer properties, though could be adapted
+            in the future for all property types.
+            
+            <br><br>
+            
+            Note that labels and property names are <b>CaSe SeNsItiVe</b>.
+            
+            <br><br>
+            
+            <i>Example:</i> 
+            <span>
+            	Acquire a single image with an option <i>Exposure</i> time <i>10</i> ms:
+                <br>
+                <a href="http://localhost:8000/acquire/image/?exposure=10">
+                    http://localhost:8000/acquire/image/?exposure=10
+                </a>
+                <br><br>
+            </span>
+
+            
+            
+            
+            <table>
+                <tr>
+                    <th>
+                        Field
+                    </th>
+                    <th>
+                        Prevalence
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        exposure
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [Int] The time in ms of exposure.
+                    </td>
+                </tr>        
+            </table>
+        </div>        
+        <div>
+            <h2><a name="acquireImageandAdd" href="/acquire/imageandadd/">/acquire/imageandadd/</a></h2>
+            Instructs µManager to snap of a single image and adds it to a previously created acquisition, see <a href="#setAcquisition">/set/acquisition/</a>
+            
+            <br><br>
+            
+            Currently, this defaults to integer properties, though could be adapted
+            in the future for all property types.
+            
+            <br><br>
+            
+            Note that labels and property names are <b>CaSe SeNsItiVe</b>.
+            
+            <br><br>
+            
+            <i>Example:</i> 
+            <span>
+            	Set the <i>Exposure</i> time of the <i>DCam</i> device to <i>10</i> ms:
+                <br>
+                <a href="http://localhost:8000/acquire/imageandadd/?name=test&frame=0&channel=0&slice=0&position=0">
+                    http://localhost:8000/acquire/imageandadd/?name=test&frame=0&channel=0&slice=0&position=0
+                </a>
+                <br><br>
+            </span>
+
+
+ <table>
+                <tr>
+                    <th>
+                        Field
+                    </th>
+                    <th>
+                        Prevalence
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        name
+                    </td>
+                    <td>
+                        <i>Required</i>
+                    </td>
+                    <td>
+                        [String] The acquisition that the new image will be added to.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        frames
+                    </td>
+                    <td>
+                        <i>Required</i>
+                    </td>
+                    <td>
+                        [Int] The frame position of the new image, 0 indexed
+                    </td>
+                </tr>    
+                <tr>
+                    <td>
+                        channels
+                    </td>
+                    <td>
+                        <i>Required</i>
+                    </td>
+                    <td>
+                        [Int] The channel position of the new image, 0 indexed
+                    </td>
+                </tr>  
+                <tr>
+                    <td>
+                        slices
+                    </td>
+                    <td>
+                        <i>Required</i>
+                    </td>
+                    <td>
+                        [Int] The slice position of the new image, 0 indexed.
+                    </td>
+                </tr> 
+                <tr>
+                    <td>
+                        position
+                    </td>
+                    <td>
+                        <i>Required</i>
+                    </td>
+                    <td>
+                        [Int] The XY location of the new image, 0 indexed
+                    </td>
+                </tr> 
+                <tr>
+                    <td>
+                        exposure
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [Int] The time in ms of exposure.
+                    </td>
+                </tr> 
             </table>
         </div>        
     </body>

@@ -14,12 +14,12 @@ import edu.umassmed.big.mmremote.µmKNIME;
  *  
  * @author kdb
  */
-public class ImageSnapandAddHandler  extends Handler {
+public class AcquireImageAndAddHandler  extends Handler {
     
     
     @Override
     protected String getResponse() throws IOException {
-        ReportingUtils.logMessage("Generating Snap Image response.");
+        ReportingUtils.logMessage("Generating Acquire and Add Image response.");
         
         try {
             message         = new Message("OK");
@@ -28,7 +28,7 @@ public class ImageSnapandAddHandler  extends Handler {
             		|| !params.containsKey("slice") || !params.containsKey("position"))
                 throw new MissingKeyException();
             
-            if (!params.containsKey("exposure")) {
+            if (params.containsKey("exposure")) {
             	double exposure = Double.parseDouble(params.get("exposure").toString());
             	µmKNIME.core.setExposure(exposure);
             }
@@ -41,7 +41,6 @@ public class ImageSnapandAddHandler  extends Handler {
             
             ReportingUtils.logMessage("Snapping a single image, with optional exposure, and adding it to an acquisition in the correct position.");
             µmKNIME.si.snapAndAddImage(name, frame, channel, slice, position);
-           
 
         } catch (MissingKeyException e) {
             message         = new Message("ERROR");

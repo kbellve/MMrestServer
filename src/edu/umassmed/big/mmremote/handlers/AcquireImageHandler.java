@@ -13,7 +13,7 @@ import edu.umassmed.big.mmremote.µmKNIME;
  *  
  * @author kdb
  */
-public class ImageSingleSnapHandler  extends Handler {
+public class AcquireImageHandler  extends Handler {
     
     
     @Override
@@ -25,7 +25,7 @@ public class ImageSingleSnapHandler  extends Handler {
             ReportingUtils.logMessage("Snapping a single image.");
             
             // Optionally change exposure before snapping image
-            if (!params.containsKey("exposure")) {
+            if (params.containsKey("exposure")) {
             	double exposure = Double.parseDouble(params.get("exposure").toString());
             	µmKNIME.core.setExposure(exposure);
             }

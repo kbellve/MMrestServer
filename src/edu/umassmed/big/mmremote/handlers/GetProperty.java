@@ -6,12 +6,9 @@ import com.google.gson.internal.LinkedTreeMap;
 import edu.umassmed.big.mmremote.Message;
 import edu.umassmed.big.mmremote.µmKNIME;
 import mmcorej.StrVector;
-import mmcorej.TaggedImage;
 
 import java.io.IOException;
-import java.util.Iterator;
 
-import org.json.JSONObject;
 import org.micromanager.utils.ReportingUtils;
 
 /**
