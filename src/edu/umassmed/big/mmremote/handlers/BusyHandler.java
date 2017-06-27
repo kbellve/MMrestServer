@@ -29,12 +29,12 @@ public class BusyHandler extends Handler {
             // These MM functions seem to be blocking, but it might be device dependent if it is blocking or not...
             if (params.containsKey("device")) {
             	String name        	= params.get("device").toString();
-            	ReportingUtils.logMessage("Checking if " + name + " is busy");
+            	ReportingUtils.logMessage("µmKNIME: Checking if " + name + " is busy");
             	if (µmKNIME.core.deviceBusy(name) == true) message = new Message ("TRUE");
             	else message = new Message ("FALSE");
             }
             else {
-            	ReportingUtils.logMessage("Checking if µManager is busy");
+            	ReportingUtils.logMessage("µmKNIME: Checking if µManager is busy");
             	if (µmKNIME.core.systemBusy() == true) message = new Message ("TRUE");
             	else message = new Message ("FALSE");
             }
@@ -42,10 +42,10 @@ public class BusyHandler extends Handler {
                 
         } catch (org.micromanager.utils.MMScriptException e) {
             message         = new Message("ERROR");
-            message.error   = "GET BUSY failed";
+            message.error   = "µmKNIME: GET BUSY failed";
         } catch (Exception e) {
             message         = new Message("ERROR");
-            message.error   = "Could not handle GET BUSY request.";
+            message.error   = "µmKNIME: Could not handle GET BUSY request.";
             ReportingUtils.logError(e);
         }
         Gson gson           = new Gson();

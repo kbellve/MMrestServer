@@ -18,11 +18,11 @@ public class AcquireImageHandler  extends Handler {
     
     @Override
     protected String getResponse() throws IOException {
-        ReportingUtils.logMessage("Generating Snap Image response.");
+        ReportingUtils.logMessage("µmKNIME: Generating Snap Image response.");
         
         try {
             message         = new Message("OK");
-            ReportingUtils.logMessage("Snapping a single image.");
+            ReportingUtils.logMessage("µmKNIME: Snapping a single image.");
             
             // Optionally change exposure before snapping image
             if (params.containsKey("exposure")) {
@@ -33,7 +33,7 @@ public class AcquireImageHandler  extends Handler {
             µmKNIME.si.snapSingleImage();
         } catch (Exception e) {
             message         = new Message("ERROR");
-            message.error   = "Could not handle Snap Image request.";
+            message.error   = "µmKNIME: Could not handle Snap Image request.";
             ReportingUtils.logError(e);
         }
         Gson gson           = new Gson();

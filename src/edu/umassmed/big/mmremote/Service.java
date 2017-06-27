@@ -9,6 +9,7 @@ import edu.umassmed.big.mmremote.handlers.ImageViewHandler;
 import edu.umassmed.big.mmremote.handlers.IndexHandler;
 import edu.umassmed.big.mmremote.handlers.AcquisitionHandler;
 import edu.umassmed.big.mmremote.handlers.SetPosition;
+import edu.umassmed.big.mmremote.handlers.SetROI;
 import edu.umassmed.big.mmremote.handlers.SetProperty;
 import edu.umassmed.big.mmremote.handlers.GetProperty;
 
@@ -71,6 +72,7 @@ public class Service {
         (server.createContext("/set/acquisition/", 	new AcquisitionHandler())).getFilters().add(new ParameterFilter());
         (server.createContext("/set/property/", 	new SetProperty())).getFilters().add(new ParameterFilter());
         (server.createContext("/set/position/", 	new SetPosition())).getFilters().add(new ParameterFilter());
+        (server.createContext("/set/ROI/", 			new SetROI())).getFilters().add(new ParameterFilter());
         
     }
     

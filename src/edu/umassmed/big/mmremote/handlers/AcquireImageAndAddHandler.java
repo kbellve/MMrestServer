@@ -19,7 +19,7 @@ public class AcquireImageAndAddHandler  extends Handler {
     
     @Override
     protected String getResponse() throws IOException {
-        ReportingUtils.logMessage("Generating Acquire and Add Image response.");
+        ReportingUtils.logMessage("µmKNIME: Generating Acquire and Add Image response.");
         
         try {
             message         = new Message("OK");
@@ -44,13 +44,13 @@ public class AcquireImageAndAddHandler  extends Handler {
 
         } catch (MissingKeyException e) {
             message         = new Message("ERROR");
-            message.error   = "type something";
+            message.error   = "µmKNIME: type something";
         } catch (org.micromanager.utils.MMScriptException e) {
             message         = new Message("ERROR");
-            message.error   = "SnapandAddImage failed";
+            message.error   = "µmKNIME: SnapandAddImage failed";
         }catch (Exception e) {
             message         = new Message("ERROR");
-            message.error   = "Could not handle Snap and Add request.";
+            message.error   = "µmKNIME: Could not handle Snap and Add request.";
             ReportingUtils.logError(e);
         }
         Gson gson           = new Gson();

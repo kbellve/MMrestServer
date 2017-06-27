@@ -18,7 +18,7 @@ public class SetPosition extends Handler {
     
     @Override
     protected String getResponse() throws IOException {
-        ReportingUtils.logMessage("Generating SET X, Y or Z position response.");
+        ReportingUtils.logMessage("µmKNIME: Generating SET X, Y or Z position response.");
         
         Double dXpos = 0.0,dYpos = 0.0,dZpos = 0.0;
         
@@ -35,17 +35,17 @@ public class SetPosition extends Handler {
             
             if (params.containsKey("X")) {
             	dXpos  = Double.parseDouble(params.get("X").toString());
-            	ReportingUtils.logMessage("Setting X Postion to: " + dXpos);
+            	ReportingUtils.logMessage("µmKNIME: Setting X Postion to: " + dXpos);
             	µmKNIME.core.setXYPosition(dXpos, dYpos);
             }
             if (params.containsKey("Y")) {
             	dYpos  = Double.parseDouble(params.get("Y").toString());
-            	ReportingUtils.logMessage("Setting Y Postion to: " + dYpos);
+            	ReportingUtils.logMessage("µmKNIME: Setting Y Postion to: " + dYpos);
             	µmKNIME.core.setXYPosition(dXpos, dYpos);
             }
             if (params.containsKey("Z")) {
             	dZpos  = Double.parseDouble(params.get("Z").toString());
-            	ReportingUtils.logMessage("Setting Z Postion to: " + dZpos);
+            	ReportingUtils.logMessage("µmKNIME: Setting Z Postion to: " + dZpos);
             	µmKNIME.core.setPosition(dZpos);
             }
             
@@ -66,10 +66,10 @@ public class SetPosition extends Handler {
             
         } catch (MissingKeyException e) {
             message         = new Message("ERROR");
-            message.error   = "SetPosition requests requires either the fields 'X', 'Y', 'Z','HOME' or 'ORIGIN' to be set.";
+            message.error   = "µmKNIME: SetPosition requests requires either the fields 'X', 'Y', 'Z','HOME' or 'ORIGIN' to be set.";
         } catch (Exception e) {
             message         = new Message("ERROR");
-            message.error   = "Could not handle SET POSITION request.";
+            message.error   = "µmKNIME: Could not handle SET POSITION request.";
             ReportingUtils.logError(e);
         }
         Gson gson           = new Gson();

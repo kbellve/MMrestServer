@@ -20,7 +20,7 @@ public class µmKNIME implements org.micromanager.api.MMPlugin {
 
     @Override
     public void setApp(ScriptInterface si) {
-        ReportingUtils.logMessage("Ready for control by KNIME, active on port 8000.");
+        ReportingUtils.logMessage("µmKNIME: Ready for control by KNIME, active on port 8000.");
         µmKNIME.si   = si;
         µmKNIME.core = si.getMMCore();
         try {
