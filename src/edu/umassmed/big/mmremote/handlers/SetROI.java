@@ -37,7 +37,7 @@ public class SetROI extends Handler {
             
             ySize = Integer.parseInt(params.get("ySize").toString());
             
-            ReportingUtils.logMessage("µmKNIME Setting ROI to (" + x +","+ y +","+ xSize +","+ ySize +")");
+            ReportingUtils.logMessage("µmKNIME: Setting ROI to (" + x +","+ y +","+ xSize +","+ ySize +")");
             
             µmKNIME.core.setROI(x, y, xSize, ySize);
             
@@ -46,10 +46,10 @@ public class SetROI extends Handler {
             
         } catch (MissingKeyException e) {
             message         = new Message("ERROR");
-            message.error   = "SetPosition requests requires the fields 'x', 'y', 'xSize',and 'ySize'";
+            message.error   = "µmKNIME: SetPosition requests requires the fields 'x', 'y', 'xSize',and 'ySize'";
         } catch (Exception e) {
             message         = new Message("ERROR");
-            message.error   = "Could not handle SET ROI request.";
+            message.error   = "µmKNIME: Could not handle SET ROI request.";
             ReportingUtils.logError(e);
         }
         Gson gson           = new Gson();

@@ -24,7 +24,7 @@ public class SetPosition extends Handler {
         
         try {
             message         = new Message("OK");
-            if (!params.containsKey("X") && !params.containsKey("Y") && !params.containsKey("Z")
+            if (!params.containsKey("x") && !params.containsKey("y") && !params.containsKey("z")
             		&& !params.containsKey("Home") && !params.containsKey("Origin"))
                 throw new MissingKeyException();
            
@@ -34,39 +34,39 @@ public class SetPosition extends Handler {
             dZpos = µmKNIME.core.getPosition();
             
             if (params.containsKey("X")) {
-            	dXpos  = Double.parseDouble(params.get("X").toString());
+            	dXpos  = Double.parseDouble(params.get("x").toString());
             	ReportingUtils.logMessage("µmKNIME: Setting X Postion to: " + dXpos);
             	µmKNIME.core.setXYPosition(dXpos, dYpos);
             }
             if (params.containsKey("Y")) {
-            	dYpos  = Double.parseDouble(params.get("Y").toString());
+            	dYpos  = Double.parseDouble(params.get("y").toString());
             	ReportingUtils.logMessage("µmKNIME: Setting Y Postion to: " + dYpos);
             	µmKNIME.core.setXYPosition(dXpos, dYpos);
             }
             if (params.containsKey("Z")) {
-            	dZpos  = Double.parseDouble(params.get("Z").toString());
+            	dZpos  = Double.parseDouble(params.get("z").toString());
             	ReportingUtils.logMessage("µmKNIME: Setting Z Postion to: " + dZpos);
             	µmKNIME.core.setPosition(dZpos);
             }
             
             if (params.containsKey("Home")) {
-            	if (params.get("Home").toString() == "XY")
+            	if (params.get("Home").toString() == "xy")
             		µmKNIME.core.home(µmKNIME.core.getXYStageDevice());
-            	if (params.get("Home").toString() == "Z")
+            	if (params.get("Home").toString() == "z")
             		µmKNIME.core.home(µmKNIME.core.getFocusDevice());
             }
             
             if (params.containsKey("Origin")) {
-            	if (params.get("Origin").toString() == "XY")
+            	if (params.get("Origin").toString() == "xy")
             		µmKNIME.core.setOriginXY();
-            	if (params.get("Origin").toString() == "Z")
+            	if (params.get("Origin").toString() == "z")
             		µmKNIME.core.setOrigin();
             }
         
             
         } catch (MissingKeyException e) {
             message         = new Message("ERROR");
-            message.error   = "µmKNIME: SetPosition requests requires either the fields 'X', 'Y', 'Z','HOME' or 'ORIGIN' to be set.";
+            message.error   = "µmKNIME: SetPosition requests requires either the fields 'x', 'y', 'z','HOME' or 'ORIGIN' to be set.";
         } catch (Exception e) {
             message         = new Message("ERROR");
             message.error   = "µmKNIME: Could not handle SET POSITION request.";
