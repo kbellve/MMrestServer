@@ -18,7 +18,7 @@ public class BusyHandler extends Handler {
     
     @Override
     protected String getResponse() throws IOException {
-        ReportingUtils.logMessage("Opening an Acquisition");
+        ReportingUtils.logMessage("µmKNIME: Opening an Acquisition");
         
         // This function checks to see if a particular device is busy if passed with a device=, using deviceBusy()
         // if nothing is passed, then the systemBusy() is called which will return true if any device is busy
@@ -42,10 +42,10 @@ public class BusyHandler extends Handler {
                 
         } catch (org.micromanager.utils.MMScriptException e) {
             message         = new Message("ERROR");
-            message.error   = "µmKNIME: GET BUSY failed";
+            message.error   = "GET BUSY failed";
         } catch (Exception e) {
             message         = new Message("ERROR");
-            message.error   = "µmKNIME: Could not handle GET BUSY request.";
+            message.error   = "Could not handle GET BUSY request.";
             ReportingUtils.logError(e);
         }
         Gson gson           = new Gson();

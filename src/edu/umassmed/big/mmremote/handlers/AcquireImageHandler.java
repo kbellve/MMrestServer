@@ -33,7 +33,7 @@ public class AcquireImageHandler  extends Handler {
             µmKNIME.si.snapSingleImage();
         } catch (Exception e) {
             message         = new Message("ERROR");
-            message.error   = "µmKNIME: Could not handle Snap Image request.";
+            message.error   = "Could not handle Snap Image request.";
             ReportingUtils.logError(e);
         }
         Gson gson           = new Gson();

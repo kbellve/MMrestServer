@@ -62,7 +62,7 @@ public class Service {
         
         // POST -> Tells µManager to acquire an image
         (server.createContext("/acquire/image/",    	new AcquireImageHandler())).getFilters().add(new ParameterFilter());
-        (server.createContext("/acquire/imageandadd/", new AcquireImageAndAddHandler())).getFilters().add(new ParameterFilter());
+        (server.createContext("/acquire/imageandadd/", 	new AcquireImageAndAddHandler())).getFilters().add(new ParameterFilter());
         
         // SET / GET request handlers:
         (server.createContext("/get/busy/",    		new BusyHandler())).getFilters().add(new ParameterFilter());

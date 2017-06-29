@@ -64,7 +64,7 @@ tr:nth-child(odd) {
     </head>
     <body>
         <img id="testLive">
-        <h1>µManager REST API Overview</h1>
+        <h1>&mu;Manager REST API Overview</h1>
         
         <div>
             <h2>Data format</h2>
@@ -173,7 +173,7 @@ tr:nth-child(odd) {
         
          <div>          
             <h2>Acquire requests</h2>
-            ACQUIRE requests µManager to snap a single image.  
+            ACQUIRE requests &mu;Manager to snap a single image.  
            
             <br>
             <br> 
@@ -187,14 +187,11 @@ tr:nth-child(odd) {
             
         </div>
         
-        
-        <h1>
-            Implementation Details
-        </h1>
+        <h1>Implementation Details</h1>
         
         <div>
             <h2><a name="getBusy" href="/get/busy/">/get/busy/</a></h2>
-            Check if µManager or a specific µManager device is busy. This is a generic property getter without bounds
+            Check if &mu;Manager or a specific &mu;Manager device is busy. This is a generic property getter without bounds
             checking, ergo, changing properties that require the camera or stage to be
             offline will not ensure that this is the case. 
             
@@ -209,7 +206,7 @@ tr:nth-child(odd) {
             
             <br><br>
             
-            <i>Examples:</i> 
+            <i>Examples</i> 
             <span>
                 Check if the <i>DCam</i> device is busy:
                 <br>
@@ -218,7 +215,7 @@ tr:nth-child(odd) {
                 </a>
                 <br>
                 <br>
-                Check if <i>µManager</i> is busy:
+                Check if <i>&mu;Manager</i> is busy:
                 <br>
               	<a href="http://localhost:8000/get/busy/">
                     http://localhost:8000/get/busy/
@@ -310,7 +307,7 @@ tr:nth-child(odd) {
                         [0; 1] <b>Include a list of camera-device properties in 
                         the response.</b> If this parameter is included in the 
                         request, and if it equals to 1, a list of camera-device
-                        properties will be included under <i>payload.cameraProperties<i>.
+                        properties will be included under <i>payload.cameraProperties</i>.
                     </td>
                 </tr> 
                 <tr>
@@ -324,14 +321,14 @@ tr:nth-child(odd) {
                         [0; 1] <b>Include a list of image tags in 
                         the response.</b> If this parameter is included in the 
                         request, and if it equals to 1, a list of image tags 
-                        will be included under <i>payload.tags<i>.
+                        will be included under <i>payload.tags</i>.
                     </td>
                 </tr>                 
             </table>
         </div>
-            <div>
+        <div>
             <h2><a name="getProperty" href="/get/property/">/get/property/</a></h2>
-            Get a single or multiple µManagerCore device parameter. This is a generic property getter without bounds
+            Get a single or multiple MMCore device parameter. This is a generic property getter without bounds
             checking, ergo, changing properties that require the camera or stage to be
             offline will not ensure that this is the case. 
             
@@ -346,7 +343,7 @@ tr:nth-child(odd) {
             
             <br><br>
             
-            <i>Example:</i> 
+            <i>Example</i> 
             <span>
             	Get the <i>Exposure</i> time of the <i>DCam</i> device:
 				<br>
@@ -401,7 +398,7 @@ tr:nth-child(odd) {
             
             <br><br>
             
-            Currently, this only appears to work with µManager 1.4 and not 2.0
+            Currently, this only appears to work with &mu;Manager 1.4 and not 2.0
             
             <br><br>
             
@@ -409,7 +406,7 @@ tr:nth-child(odd) {
             
             <br><br>
             
-            <i>Example:</i> 
+            <i>Example</i> 
             <span>
             	Set the <i>Exposure</i> time of the <i>DCam</i> device to <i>10</i> ms:
                 <br>
@@ -451,7 +448,7 @@ tr:nth-child(odd) {
                         <i>Required</i>
                     </td>
                     <td>
-                        [String] The directory that the acquistion will be saved in.
+                        [String] The directory that the acquisition will be saved in.
                     </td>
                 </tr> 
                 <tr>
@@ -525,7 +522,7 @@ tr:nth-child(odd) {
         </div>        
         <div>
             <h2><a name="setProperty" href="/set/property/">/set/property/</a></h2>
-            Set an µManagerCore parameter. This is a generic property setter without bounds
+            Set an MMCore parameter. This is a generic property setter without bounds
             checking, ergo, changing properties that require the camera or stage to be
             offline will not ensure that this is the case. 
             
@@ -540,7 +537,7 @@ tr:nth-child(odd) {
             
             <br><br>
             
-            <i>Example:</i> 
+            <i>Example</i> 
             <span>
             	Set the <i>Exposure</i> time of the <i>DCam</i> device to <i>10</i> ms:
                 <br>
@@ -604,7 +601,7 @@ tr:nth-child(odd) {
         </div>        
         <div>
             <h2><a name="acquireImage" href="/acquire/image/">/acquire/image/</a></h2>
-            Instructs µManager to acquire a single image with the current settings, optionally changing the exposure 
+            Instructs &mu;Manager to acquire a single image with the current settings, optionally changing the exposure 
             
             <br><br>
             
@@ -617,7 +614,7 @@ tr:nth-child(odd) {
             
             <br><br>
             
-            <i>Example:</i> 
+            <i>Example</i> 
             <span>
             	Acquire a single image with an option <i>Exposure</i> time <i>10</i> ms:
                 <br>
@@ -626,10 +623,7 @@ tr:nth-child(odd) {
                 </a>
                 <br><br>
             </span>
-
-            
-            
-            
+   
             <table>
                 <tr>
                     <th>
@@ -657,7 +651,7 @@ tr:nth-child(odd) {
         </div>        
         <div>
             <h2><a name="acquireImageandAdd" href="/acquire/imageandadd/">/acquire/imageandadd/</a></h2>
-            Instructs µManager to snap a single image and adds it to a previously created acquisition, see <a href="#setAcquisition">/set/acquisition/</a>
+            Instructs &mu;Manager to snap a single image and adds it to a previously created acquisition, see <a href="#setAcquisition">/set/acquisition/</a>
             
             <br><br>
             
@@ -670,7 +664,7 @@ tr:nth-child(odd) {
             
             <br><br>
             
-            <i>Example:</i> 
+            <i>Example</i> 
             <span>
             	Set the <i>Exposure</i> time of the <i>DCam</i> device to <i>10</i> ms:
                 <br>
@@ -681,7 +675,7 @@ tr:nth-child(odd) {
             </span>
 
 
- <table>
+ 			<table>
                 <tr>
                     <th>
                         Field

@@ -34,7 +34,7 @@ public class ImageGetHandler extends Handler {
     
     @Override
     protected String getResponse () throws IOException {
-        ReportingUtils.logMessage("µmKNIME: enerating image retrieval response.");
+        ReportingUtils.logMessage("µmKNIME: generating image retrieval response.");
         
         try {
             message         = new Message("OK");
@@ -46,7 +46,7 @@ public class ImageGetHandler extends Handler {
                 loadImageTags();            
         } catch (Exception e) {
             message         = new Message("ERROR");
-            message.error   = "µmKNIME: Error retrieving live image.";
+            message.error   = "Error retrieving live image.";
             ReportingUtils.logError(e);
         }
 

@@ -21,7 +21,7 @@ abstract public class PageHandler implements HttpHandler  {
     
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        ReportingUtils.logMessage("Handling overview request.");        
+        ReportingUtils.logMessage("µmKNIME: Handling overview request.");        
         
         java.util.Scanner scanner   = new java.util.Scanner(getFileStream()).useDelimiter("\\A");
         String response             = scanner.hasNext() ? scanner.next() : "";

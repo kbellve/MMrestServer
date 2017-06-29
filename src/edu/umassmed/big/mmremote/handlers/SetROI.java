@@ -18,7 +18,7 @@ public class SetROI extends Handler {
     
     @Override
     protected String getResponse() throws IOException {
-        ReportingUtils.logMessage("Creating an ROI.");
+        ReportingUtils.logMessage("µmKNIME: Creating an ROI.");
         
         
         try {
@@ -46,10 +46,10 @@ public class SetROI extends Handler {
             
         } catch (MissingKeyException e) {
             message         = new Message("ERROR");
-            message.error   = "µmKNIME: SetPosition requests requires the fields 'x', 'y', 'xSize',and 'ySize'";
+            message.error   = "SetROI requests requires the fields 'x', 'y', 'xSize',and 'ySize'";
         } catch (Exception e) {
             message         = new Message("ERROR");
-            message.error   = "µmKNIME: Could not handle SET ROI request.";
+            message.error   = "Could not handle SET ROI request.";
             ReportingUtils.logError(e);
         }
         Gson gson           = new Gson();

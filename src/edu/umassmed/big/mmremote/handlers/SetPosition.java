@@ -66,10 +66,10 @@ public class SetPosition extends Handler {
             
         } catch (MissingKeyException e) {
             message         = new Message("ERROR");
-            message.error   = "µmKNIME: SetPosition requests requires either the fields 'x', 'y', 'z','HOME' or 'ORIGIN' to be set.";
+            message.error   = "SetPosition requests requires either the fields 'x', 'y', 'z','HOME' or 'ORIGIN' to be set.";
         } catch (Exception e) {
             message         = new Message("ERROR");
-            message.error   = "µmKNIME: Could not handle SET POSITION request.";
+            message.error   = "Could not handle SET POSITION request.";
             ReportingUtils.logError(e);
         }
         Gson gson           = new Gson();

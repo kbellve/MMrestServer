@@ -39,18 +39,18 @@ public class AcquireImageAndAddHandler  extends Handler {
             int slice    	= Integer.parseInt(params.get("slice").toString());
             int position    = Integer.parseInt(params.get("position").toString());
             
-            ReportingUtils.logMessage("Snapping a single image, with optional exposure, and adding it to an acquisition in the correct position.");
+            ReportingUtils.logMessage("µmKNIME: Snapping a single image, with optional exposure, and adding it to an acquisition in the correct position.");
             µmKNIME.si.snapAndAddImage(name, frame, channel, slice, position);
 
         } catch (MissingKeyException e) {
             message         = new Message("ERROR");
-            message.error   = "µmKNIME: type something";
+            message.error   = "type something";
         } catch (org.micromanager.utils.MMScriptException e) {
             message         = new Message("ERROR");
-            message.error   = "µmKNIME: SnapandAddImage failed";
+            message.error   = "SnapandAddImage failed";
         }catch (Exception e) {
             message         = new Message("ERROR");
-            message.error   = "µmKNIME: Could not handle Snap and Add request.";
+            message.error   = "Could not handle Snap and Add request.";
             ReportingUtils.logError(e);
         }
         Gson gson           = new Gson();

@@ -18,10 +18,10 @@ public class SetProperty extends Handler {
     
     @Override
     protected String getResponse() throws IOException {
-        ReportingUtils.logMessage("Generating SET response.");
+        ReportingUtils.logMessage("µmKNIME: Generating SET response.");
         
         try {
-            message         = new Message("µmKNIME: OK");
+            message         = new Message("OK");
             if (!params.containsKey("device") || !params.containsKey("property") || !params.containsKey("value"))
                 throw new MissingKeyException();
         
@@ -35,10 +35,10 @@ public class SetProperty extends Handler {
             
         } catch (MissingKeyException e) {
             message         = new Message("ERROR");
-            message.error   = "µmKNIME: SetProperty requests require the fields 'device', 'property' and 'value' to be set.";
+            message.error   = "SetProperty requests require the fields 'device', 'property' and 'value' to be set.";
         } catch (Exception e) {
             message         = new Message("ERROR");
-            message.error   = "µmKNIME: Could not handle SET request.";
+            message.error   = "Could not handle SET request.";
             ReportingUtils.logError(e);
         }
         Gson gson           = new Gson();

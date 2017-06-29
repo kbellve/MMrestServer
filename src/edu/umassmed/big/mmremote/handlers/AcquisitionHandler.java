@@ -42,13 +42,13 @@ public class AcquisitionHandler extends Handler {
             
         } catch (MissingKeyException e) {
             message         = new Message("ERROR");
-            message.error   = "µmKNIME: SET ACQUISITION requests requires the fields 'name', 'directory', 'frames','channels', 'slices', 'positions', 'show' and 'save' to be set.";
+            message.error   = "SET ACQUISITION requests requires the fields 'name', 'directory', 'frames','channels', 'slices', 'positions', 'show' and 'save' to be set.";
         } catch (org.micromanager.utils.MMScriptException e) {
             message         = new Message("ERROR");
-            message.error   = "µmKNIME: SET ACQUISITION failed";
+            message.error   = "SET ACQUISITION failed";
         } catch (Exception e) {
             message         = new Message("ERROR");
-            message.error   = "µmKNIME: Could not handle SET ACQUISITION request.";
+            message.error   = "Could not handle SET ACQUISITION request.";
             ReportingUtils.logError(e);
         }
         Gson gson           = new Gson();

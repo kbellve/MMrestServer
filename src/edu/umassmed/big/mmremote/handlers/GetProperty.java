@@ -21,7 +21,7 @@ public class GetProperty extends Handler {
     
     @Override
     protected String getResponse() throws IOException {
-        ReportingUtils.logMessage("Generating GET response.");
+        ReportingUtils.logMessage("µmKNIME: Generating GET response.");
         
         try {
             message         		= new Message("OK");
