@@ -1,6 +1,7 @@
 package edu.umassmed.big.mmremote;
 
 import com.sun.net.httpserver.HttpServer;
+//import edu.umassmed.big.mmremote.handlers.ImageGetHandler;
 import edu.umassmed.big.mmremote.handlers.ImageGetHandler;
 import edu.umassmed.big.mmremote.handlers.BusyHandler;
 import edu.umassmed.big.mmremote.handlers.AcquireImageHandler;
@@ -57,22 +58,23 @@ public class Service {
         createServer();
 
         // Internal documentation handlers:
-        server.createContext("/view/image/",    	new ImageViewHandler());
-        server.createContext("/",               	new IndexHandler());
+        server.createContext("/view/image/",    		new ImageViewHandler());
+        server.createContext("/",               		new IndexHandler());
         
         // POST -> Tells µManager to acquire an image
         (server.createContext("/acquire/image/",    	new AcquireImageHandler())).getFilters().add(new ParameterFilter());
         (server.createContext("/acquire/imageandadd/", 	new AcquireImageAndAddHandler())).getFilters().add(new ParameterFilter());
         
         // SET / GET request handlers:
-        (server.createContext("/get/busy/",    		new BusyHandler())).getFilters().add(new ParameterFilter());
-        (server.createContext("/get/image/",    	new ImageGetHandler())).getFilters().add(new ParameterFilter());
-        (server.createContext("/get/property/", 	new GetProperty())).getFilters().add(new ParameterFilter());
+        (server.createContext("/get/busy/",    			new BusyHandler())).getFilters().add(new ParameterFilter());
+        //(server.createContext("/get/image/",    		new OrigImageGetHandler())).getFilters().add(new ParameterFilter());
+        (server.createContext("/get/image/",    		new ImageGetHandler())).getFilters().add(new ParameterFilter());
+        (server.createContext("/get/property/", 		new GetProperty())).getFilters().add(new ParameterFilter());
         
-        (server.createContext("/set/acquisition/", 	new AcquisitionHandler())).getFilters().add(new ParameterFilter());
-        (server.createContext("/set/property/", 	new SetProperty())).getFilters().add(new ParameterFilter());
-        (server.createContext("/set/position/", 	new SetPosition())).getFilters().add(new ParameterFilter());
-        (server.createContext("/set/ROI/", 			new SetROI())).getFilters().add(new ParameterFilter());
+        (server.createContext("/set/acquisition/", 		new AcquisitionHandler())).getFilters().add(new ParameterFilter());
+        (server.createContext("/set/property/", 		new SetProperty())).getFilters().add(new ParameterFilter());
+        (server.createContext("/set/position/", 		new SetPosition())).getFilters().add(new ParameterFilter());
+        (server.createContext("/set/ROI/", 				new SetROI())).getFilters().add(new ParameterFilter());
         
     }
     
