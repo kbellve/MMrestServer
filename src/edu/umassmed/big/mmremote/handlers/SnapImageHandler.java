@@ -11,7 +11,7 @@ import edu.umassmed.big.mmremote.mmKNIME;
  *  
  * @author kdb
  */
-public class AcquireImageHandler  extends Handler {
+public class SnapImageHandler  extends Handler {
     
     
     @Override

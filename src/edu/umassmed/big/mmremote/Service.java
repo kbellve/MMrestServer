@@ -4,7 +4,7 @@ import com.sun.net.httpserver.HttpServer;
 //import edu.umassmed.big.mmremote.handlers.ImageGetHandler;
 import edu.umassmed.big.mmremote.handlers.ImageGetHandler;
 import edu.umassmed.big.mmremote.handlers.BusyHandler;
-import edu.umassmed.big.mmremote.handlers.AcquireImageHandler;
+import edu.umassmed.big.mmremote.handlers.SnapImageHandler;
 import edu.umassmed.big.mmremote.handlers.ImageViewHandler;
 import edu.umassmed.big.mmremote.handlers.IndexHandler;
 import edu.umassmed.big.mmremote.handlers.SetDatastore;
@@ -61,7 +61,7 @@ public class Service {
         server.createContext("/",               		new IndexHandler());
         
         // POST -> Tells µManager to acquire an image
-        (server.createContext("/acquire/image/",    	new AcquireImageHandler())).getFilters().add(new ParameterFilter());
+        (server.createContext("/snap/image/",    		new SnapImageHandler())).getFilters().add(new ParameterFilter());
         
         // SET / GET request handlers:
         (server.createContext("/get/busy/",    			new BusyHandler())).getFilters().add(new ParameterFilter());
