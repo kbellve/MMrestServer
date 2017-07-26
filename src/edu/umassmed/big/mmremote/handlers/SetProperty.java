@@ -3,10 +3,9 @@ package edu.umassmed.big.mmremote.handlers;
 import com.google.gson.Gson;
 
 import edu.umassmed.big.mmremote.Message;
-import edu.umassmed.big.mmremote.µmKNIME;
+import edu.umassmed.big.mmremote.mmKNIME;
 
 import java.io.IOException;
-import org.micromanager.utils.ReportingUtils;
 
 /**
  *  Handle change requests.
@@ -18,7 +17,7 @@ public class SetProperty extends Handler {
     
     @Override
     protected String getResponse() throws IOException {
-        ReportingUtils.logMessage("µmKNIME: Generating SET response.");
+    	mmKNIME.core.logMessage("µmKNIME: Generating SET response.");
         
         try {
             message         = new Message("OK");
@@ -29,7 +28,7 @@ public class SetProperty extends Handler {
             String propName     = params.get("property").toString();
             String propValue    = params.get("value").toString();
             
-            µmKNIME.core.setProperty(label, propName, Integer.parseInt(propValue));
+            mmKNIME.core.setProperty(label, propName, Integer.parseInt(propValue));
             
             
             
@@ -39,7 +38,7 @@ public class SetProperty extends Handler {
         } catch (Exception e) {
             message         = new Message("ERROR");
             message.error   = "Could not handle SET request.";
-            ReportingUtils.logError(e);
+            mmKNIME.si.getLogManager().showError(e);
         }
         Gson gson           = new Gson();
         String response     = gson.toJson(message);

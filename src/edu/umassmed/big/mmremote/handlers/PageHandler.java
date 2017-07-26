@@ -2,10 +2,12 @@ package edu.umassmed.big.mmremote.handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+
+import edu.umassmed.big.mmremote.mmKNIME;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import org.micromanager.utils.ReportingUtils;
 
 
 /**
@@ -21,7 +23,7 @@ abstract public class PageHandler implements HttpHandler  {
     
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        ReportingUtils.logMessage("µmKNIME: Handling overview request.");        
+    	mmKNIME.core.logMessage("µmKNIME: Handling overview request.");        
         
         java.util.Scanner scanner   = new java.util.Scanner(getFileStream()).useDelimiter("\\A");
         String response             = scanner.hasNext() ? scanner.next() : "";

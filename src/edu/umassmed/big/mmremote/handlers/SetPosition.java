@@ -3,10 +3,9 @@ package edu.umassmed.big.mmremote.handlers;
 import com.google.gson.Gson;
 
 import edu.umassmed.big.mmremote.Message;
-import edu.umassmed.big.mmremote.µmKNIME;
+import edu.umassmed.big.mmremote.mmKNIME;
 
 import java.io.IOException;
-import org.micromanager.utils.ReportingUtils;
 
 /**
  *  Handle change requests.
@@ -18,7 +17,7 @@ public class SetPosition extends Handler {
     
     @Override
     protected String getResponse() throws IOException {
-        ReportingUtils.logMessage("µmKNIME: Generating SET X, Y or Z position response.");
+    	mmKNIME.core.logMessage("µmKNIME: Generating SET X, Y or Z position response.");
         
         Double dXpos = 0.0,dYpos = 0.0,dZpos = 0.0;
         
@@ -29,38 +28,38 @@ public class SetPosition extends Handler {
                 throw new MissingKeyException();
            
             
-            dXpos = µmKNIME.core.getXPosition();
-            dYpos = µmKNIME.core.getYPosition();
-            dZpos = µmKNIME.core.getPosition();
+            dXpos = mmKNIME.core.getXPosition();
+            dYpos = mmKNIME.core.getYPosition();
+            dZpos = mmKNIME.core.getPosition();
             
             if (params.containsKey("X")) {
             	dXpos  = Double.parseDouble(params.get("x").toString());
-            	ReportingUtils.logMessage("µmKNIME: Setting X Postion to: " + dXpos);
-            	µmKNIME.core.setXYPosition(dXpos, dYpos);
+            	mmKNIME.core.logMessage("µmKNIME: Setting X Postion to: " + dXpos);
+            	mmKNIME.core.setXYPosition(dXpos, dYpos);
             }
             if (params.containsKey("Y")) {
             	dYpos  = Double.parseDouble(params.get("y").toString());
-            	ReportingUtils.logMessage("µmKNIME: Setting Y Postion to: " + dYpos);
-            	µmKNIME.core.setXYPosition(dXpos, dYpos);
+            	mmKNIME.core.logMessage("µmKNIME: Setting Y Postion to: " + dYpos);
+            	mmKNIME.core.setXYPosition(dXpos, dYpos);
             }
             if (params.containsKey("Z")) {
             	dZpos  = Double.parseDouble(params.get("z").toString());
-            	ReportingUtils.logMessage("µmKNIME: Setting Z Postion to: " + dZpos);
-            	µmKNIME.core.setPosition(dZpos);
+            	mmKNIME.core.logMessage("µmKNIME: Setting Z Postion to: " + dZpos);
+            	mmKNIME.core.setPosition(dZpos);
             }
             
             if (params.containsKey("Home")) {
             	if (params.get("Home").toString() == "xy")
-            		µmKNIME.core.home(µmKNIME.core.getXYStageDevice());
+            		mmKNIME.core.home(mmKNIME.core.getXYStageDevice());
             	if (params.get("Home").toString() == "z")
-            		µmKNIME.core.home(µmKNIME.core.getFocusDevice());
+            		mmKNIME.core.home(mmKNIME.core.getFocusDevice());
             }
             
             if (params.containsKey("Origin")) {
             	if (params.get("Origin").toString() == "xy")
-            		µmKNIME.core.setOriginXY();
+            		mmKNIME.core.setOriginXY();
             	if (params.get("Origin").toString() == "z")
-            		µmKNIME.core.setOrigin();
+            		mmKNIME.core.setOrigin();
             }
         
             
@@ -70,7 +69,7 @@ public class SetPosition extends Handler {
         } catch (Exception e) {
             message         = new Message("ERROR");
             message.error   = "Could not handle SET POSITION request.";
-            ReportingUtils.logError(e);
+            mmKNIME.si.getLogManager().showError(e);
         }
         Gson gson           = new Gson();
         String response     = gson.toJson(message);

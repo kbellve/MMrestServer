@@ -6,6 +6,10 @@
 
 # Code written by Karl Bellve is also under the MIT License, which is included.
 
+This is currently being moved to µManager 2.0 code base. This may or may not work at any time due to 
+ongoing development. This code no longer works with µManager 1.4 or earlier.
+
+
 # MMrestServer
 A (very) basic **RESTserver** for [MicroManager](https://micro-manager.org/).
 

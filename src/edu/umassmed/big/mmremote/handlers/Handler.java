@@ -4,11 +4,11 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import edu.umassmed.big.mmremote.Message;
+import edu.umassmed.big.mmremote.mmKNIME;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
-import org.micromanager.utils.ReportingUtils;
 
 /**
  *  Handle GET (retrieval) requests. These should never modify anything, only
@@ -25,7 +25,7 @@ abstract public class Handler implements HttpHandler  {
     
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        ReportingUtils.logMessage("µmKNIME: Handling request.");        
+    	mmKNIME.core.logMessage("µmKNIME: Handling request.");        
         params = (Map<String, Object>) exchange.getAttribute("parameters");
         String response = getResponse();
         exchange.sendResponseHeaders(200, response.length());

@@ -3,10 +3,9 @@ package edu.umassmed.big.mmremote.handlers;
 import com.google.gson.Gson;
 
 import edu.umassmed.big.mmremote.Message;
-import edu.umassmed.big.mmremote.µmKNIME;
+import edu.umassmed.big.mmremote.mmKNIME;
 
 import java.io.IOException;
-import org.micromanager.utils.ReportingUtils;
 
 /**
  *  Handle change requests.
@@ -18,7 +17,7 @@ public class BusyHandler extends Handler {
     
     @Override
     protected String getResponse() throws IOException {
-        ReportingUtils.logMessage("µmKNIME: Opening an Acquisition");
+    	mmKNIME.core.logMessage("µmKNIME: Opening an Acquisition");
         
         // This function checks to see if a particular device is busy if passed with a device=, using deviceBusy()
         // if nothing is passed, then the systemBusy() is called which will return true if any device is busy
@@ -29,24 +28,24 @@ public class BusyHandler extends Handler {
             // These MM functions seem to be blocking, but it might be device dependent if it is blocking or not...
             if (params.containsKey("device")) {
             	String name        	= params.get("device").toString();
-            	ReportingUtils.logMessage("µmKNIME: Checking if " + name + " is busy");
-            	if (µmKNIME.core.deviceBusy(name) == true) message = new Message ("TRUE");
+            	mmKNIME.core.logMessage("µmKNIME: Checking if " + name + " is busy");
+            	if (mmKNIME.core.deviceBusy(name) == true) message = new Message ("TRUE");
             	else message = new Message ("FALSE");
             }
             else {
-            	ReportingUtils.logMessage("µmKNIME: Checking if µManager is busy");
-            	if (µmKNIME.core.systemBusy() == true) message = new Message ("TRUE");
+            	mmKNIME.core.logMessage("µmKNIME: Checking if µManager is busy");
+            	if (mmKNIME.core.systemBusy() == true) message = new Message ("TRUE");
             	else message = new Message ("FALSE");
             }
             
                 
-        } catch (org.micromanager.utils.MMScriptException e) {
+        } catch (org.micromanager.internal.utils.MMException e) {
             message         = new Message("ERROR");
             message.error   = "GET BUSY failed";
         } catch (Exception e) {
             message         = new Message("ERROR");
             message.error   = "Could not handle GET BUSY request.";
-            ReportingUtils.logError(e);
+            mmKNIME.si.getLogManager().showError(e);
         }
         Gson gson           = new Gson();
         String response     = gson.toJson(message);

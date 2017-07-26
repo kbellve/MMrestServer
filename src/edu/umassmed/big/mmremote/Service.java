@@ -5,10 +5,9 @@ import com.sun.net.httpserver.HttpServer;
 import edu.umassmed.big.mmremote.handlers.ImageGetHandler;
 import edu.umassmed.big.mmremote.handlers.BusyHandler;
 import edu.umassmed.big.mmremote.handlers.AcquireImageHandler;
-import edu.umassmed.big.mmremote.handlers.AcquireImageAndAddHandler;
 import edu.umassmed.big.mmremote.handlers.ImageViewHandler;
 import edu.umassmed.big.mmremote.handlers.IndexHandler;
-import edu.umassmed.big.mmremote.handlers.AcquisitionHandler;
+import edu.umassmed.big.mmremote.handlers.SetDatastore;
 import edu.umassmed.big.mmremote.handlers.SetPosition;
 import edu.umassmed.big.mmremote.handlers.SetROI;
 import edu.umassmed.big.mmremote.handlers.SetProperty;
@@ -63,18 +62,17 @@ public class Service {
         
         // POST -> Tells µManager to acquire an image
         (server.createContext("/acquire/image/",    	new AcquireImageHandler())).getFilters().add(new ParameterFilter());
-        (server.createContext("/acquire/imageandadd/", 	new AcquireImageAndAddHandler())).getFilters().add(new ParameterFilter());
         
         // SET / GET request handlers:
         (server.createContext("/get/busy/",    			new BusyHandler())).getFilters().add(new ParameterFilter());
-        //(server.createContext("/get/image/",    		new OrigImageGetHandler())).getFilters().add(new ParameterFilter());
         (server.createContext("/get/image/",    		new ImageGetHandler())).getFilters().add(new ParameterFilter());
         (server.createContext("/get/property/", 		new GetProperty())).getFilters().add(new ParameterFilter());
         
-        (server.createContext("/set/acquisition/", 		new AcquisitionHandler())).getFilters().add(new ParameterFilter());
+        (server.createContext("/set/acquisition/", 		new SetDatastore())).getFilters().add(new ParameterFilter());
         (server.createContext("/set/property/", 		new SetProperty())).getFilters().add(new ParameterFilter());
         (server.createContext("/set/position/", 		new SetPosition())).getFilters().add(new ParameterFilter());
         (server.createContext("/set/ROI/", 				new SetROI())).getFilters().add(new ParameterFilter());
+        (server.createContext("/set/datastore/", 		new SetDatastore())).getFilters().add(new ParameterFilter());
         
     }
     

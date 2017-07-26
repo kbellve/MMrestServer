@@ -3,10 +3,9 @@ package edu.umassmed.big.mmremote.handlers;
 import com.google.gson.Gson;
 
 import edu.umassmed.big.mmremote.Message;
-import edu.umassmed.big.mmremote.µmKNIME;
+import edu.umassmed.big.mmremote.mmKNIME;
 
 import java.io.IOException;
-import org.micromanager.utils.ReportingUtils;
 
 /**
  *  Handle change requests.
@@ -18,7 +17,7 @@ public class SetROI extends Handler {
     
     @Override
     protected String getResponse() throws IOException {
-        ReportingUtils.logMessage("µmKNIME: Creating an ROI.");
+    	mmKNIME.core.logMessage("µmKNIME: Creating an ROI.");
         
         
         try {
@@ -37,9 +36,9 @@ public class SetROI extends Handler {
             
             ySize = Integer.parseInt(params.get("ySize").toString());
             
-            ReportingUtils.logMessage("µmKNIME: Setting ROI to (" + x +","+ y +","+ xSize +","+ ySize +")");
+            mmKNIME.core.logMessage("µmKNIME: Setting ROI to (" + x +","+ y +","+ xSize +","+ ySize +")");
             
-            µmKNIME.core.setROI(x, y, xSize, ySize);
+            mmKNIME.core.setROI(x, y, xSize, ySize);
             
             
                 
@@ -50,7 +49,7 @@ public class SetROI extends Handler {
         } catch (Exception e) {
             message         = new Message("ERROR");
             message.error   = "Could not handle SET ROI request.";
-            ReportingUtils.logError(e);
+            mmKNIME.si.getLogManager().showError(e);
         }
         Gson gson           = new Gson();
         String response     = gson.toJson(message);

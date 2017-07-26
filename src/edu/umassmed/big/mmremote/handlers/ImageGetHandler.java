@@ -4,7 +4,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.Headers;
 
-import edu.umassmed.big.mmremote.µmKNIME;
+import edu.umassmed.big.mmremote.mmKNIME;
 import ij.ImagePlus;
 
 import java.awt.image.BufferedImage;
@@ -15,7 +15,6 @@ import java.net.HttpURLConnection;
 
 import javax.imageio.ImageIO;
 
-import org.micromanager.utils.ReportingUtils;
 
 /**
  *  Handle GET (retrieval) requests. These should never modify anything, only
@@ -28,12 +27,11 @@ public class ImageGetHandler implements HttpHandler  {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        ReportingUtils.logMessage("µmKNIME: Handling request.");        
+    	mmKNIME.core.logMessage("µmKNIME: Handling request.");        
        
-        ij.gui.ImageWindow window   = µmKNIME.si.getSnapLiveWin();
+        ImagePlus imagePlus   = mmKNIME.si.getSnapLiveManager().getDisplay().getImagePlus();
         
-       	ImagePlus imagePlus         = window.getCanvas().getImage();
-        BufferedImage image         = imagePlus.getBufferedImage();
+       	BufferedImage image         = imagePlus.getBufferedImage();
         
      // Encode image into desired encoding, write it to byte-stream.
         ByteArrayOutputStream out   = new ByteArrayOutputStream(1000);

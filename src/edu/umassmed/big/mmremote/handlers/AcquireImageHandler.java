@@ -2,12 +2,10 @@ package edu.umassmed.big.mmremote.handlers;
 
 import java.io.IOException;
 
-import org.micromanager.utils.ReportingUtils;
-
 import com.google.gson.Gson;
 
 import edu.umassmed.big.mmremote.Message;
-import edu.umassmed.big.mmremote.µmKNIME;
+import edu.umassmed.big.mmremote.mmKNIME;
 
 /**
  *  
@@ -18,23 +16,23 @@ public class AcquireImageHandler  extends Handler {
     
     @Override
     protected String getResponse() throws IOException {
-        ReportingUtils.logMessage("µmKNIME: Generating Snap Image response.");
+    	mmKNIME.core.logMessage("µmKNIME: Generating Snap Image response.");
         
         try {
             message         = new Message("OK");
-            ReportingUtils.logMessage("µmKNIME: Snapping a single image.");
+            mmKNIME.core.logMessage("µmKNIME: Snapping a single image.");
             
             // Optionally change exposure before snapping image
             if (params.containsKey("exposure")) {
             	double exposure = Double.parseDouble(params.get("exposure").toString());
-            	µmKNIME.core.setExposure(exposure);
+            	mmKNIME.core.setExposure(exposure);
             }
             
-            µmKNIME.si.snapSingleImage();
+            mmKNIME.core.snapImage();
         } catch (Exception e) {
             message         = new Message("ERROR");
             message.error   = "Could not handle Snap Image request.";
-            ReportingUtils.logError(e);
+            mmKNIME.si.getLogManager().showError(e);
         }
         Gson gson           = new Gson();
         String response     = gson.toJson(message);
