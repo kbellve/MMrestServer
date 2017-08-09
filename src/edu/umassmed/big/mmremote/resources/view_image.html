@@ -9,7 +9,7 @@
                 //console.log(this.responseText);
                 eval("response = " + this.responseText);
                 document.getElementById("testLive").src = "data:image/png;base64," + response.payload.image;
-                setTimeout(requestImage, 10000);
+                setTimeout(requestImage, 10);
             }
             
             

@@ -126,9 +126,7 @@ tr:nth-child(odd) {
             response. 
             
             <br><br>
-            
-            A minimal example page, demonstrating how to retrieve the current live 
-            image and display it can be found at <a href="/view/image/">/view/image/</a>.
+     
             
         </div>
         
@@ -498,7 +496,10 @@ tr:nth-child(odd) {
                 <br><br>
             </span>
    
+ 			
+   
             <table>
+               <caption style="text-align: left;">General Options</caption>
                <tr>
                     <th>
                         Field
@@ -521,6 +522,7 @@ tr:nth-child(odd) {
                         [Int] The time in ms of exposure.
                     </td>
                 </tr> 
+                
                 <tr>
                     <td>
                         title
@@ -532,6 +534,31 @@ tr:nth-child(odd) {
                         [String] Title of new window.
                     </td>
                 </tr>
+               
+            </table>
+            <br>
+            
+           	
+            
+            <br>
+            <table>
+             <caption style="text-align: left;">Coordinate Options</caption>
+               <tr><td colspan="3">
+                If you are using a datastore, coordinates must also be passed to set the insert location of the new image. 
+           	The location must not overwrite an image already in the datastore.
+                </td></tr>
+               <tr>
+                    <th>
+                        Field
+                    </th>
+                    <th>
+                        Prevalence
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                </tr>
+               
                 <tr>
                     <td>
                         time
@@ -545,7 +572,7 @@ tr:nth-child(odd) {
                 </tr>    
                 <tr>
                     <td>
-                        channels
+                        channel
                     </td>
                     <td>
                         <i>Optional</i>
@@ -576,6 +603,100 @@ tr:nth-child(odd) {
                         [Int] The coordinate position of the new image, 0 indexed
                     </td>
                 </tr> 
+                
+            </table>
+            
+            <br>
+            
+           
+            <br>
+            <table>
+             <caption style="text-align: left;">Datastore Options</caption>
+               <tr><td colspan="3">
+  					A datastore will only be created if the current window does not already have a datastore attached, and 
+           	coordinates are also being passed.
+            
+                </td></tr>
+               <tr>
+                    <th>
+                        Field
+                    </th>
+                    <th>
+                        Prevalence
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                </tr>
+               
+               <tr>
+                    <td>
+                        ram
+                    </td>
+                    <td>
+                        <i>Default</i>
+                    </td>
+                    <td>
+                        µManager creates a ram-backed Datastore by default
+                    </td>
+                </tr>  
+                <tr>
+                    <td>
+                        multitiff
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [string] File name used by µManager to back a Datastore using a mutltipage tiff
+                    </td>
+                </tr>  
+                <tr>
+                    <td>
+                        singletiff
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [string] File name used by µManager to back a Datastore using single plane tiffs
+                    </td>
+                </tr> 
+                <tr>
+                    <td>
+                        directory
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [string] directory used by µManager to back a Datastore
+                    </td>
+                </tr> 
+                <tr>
+                    <td>
+                        manage
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [0|1] Instructs µManager to manage the datastore 
+                    </td>
+                </tr> 
+                <tr>
+                    <td>
+                        split
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [0|1] Instructs µManager to split the metadata into a separate file 
+                    </td>
+                </tr> 
+  				
+                
             </table>
         </div>        
         
