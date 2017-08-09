@@ -1,15 +1,14 @@
-package edu.umassmed.big.mmremote.handlers;
+package edu.umassmed.big.mmremote;
 
 import com.google.gson.Gson;
 //import com.google.gson.internal.LinkedTreeMap;
+
+import edu.umassmed.big.mmremote.handlers.Handler;
 
 //import org.micromanager.data.Coords;
 //import org.micromanager.data.Image;
 //import org.micromanager.display.DisplayWindow;
 import org.micromanager.data.Datastore;
-
-import edu.umassmed.big.mmremote.Message;
-import edu.umassmed.big.mmremote.mmKNIME;
 
 import java.io.IOException;
 import java.util.Map;
@@ -20,35 +19,7 @@ import java.util.Map;
  * 
  *  @author kdb
  */
-public class SetDatastore extends Handler {
-
-    
-    @Override
-    protected String getResponse() throws IOException {
-    	mmKNIME.core.logMessage("µmKNIME: Creating a datastore");
-        
-        try {
-        	Datastore store = parseParams(params);
-        	
-            if (store != null) {
-            	message.payload.put("hash", Integer.toString(store.hashCode()));
-            }
-            
-       // } catch (MissingKeyException e) {
-        //    message         = new Message("ERROR");
-       //     message.error   = "SET DATASTORE requests requires the field 'name'.";
-        //} catch (org.micromanager.internal.utils.MMException e) {
-        //    message         = new Message("ERROR");
-        //    message.error   = "SET DATASTORE failed";
-        } catch (Exception e) {
-            message         = new Message("ERROR");
-            message.error   = "Could not handle SET DATASTORE request.";
-            mmKNIME.si.getLogManager().showError(e);
-        }
-        Gson gson           = new Gson();
-        String response     = gson.toJson(message);
-        return response;        
-    }
+public class SetDatastore {
  
     public Datastore parseParams (Map<String, Object>   params) throws IOException {
     	
@@ -95,5 +66,4 @@ public class SetDatastore extends Handler {
     	
     	
     }
-    private class MissingKeyException extends Exception { }
 }

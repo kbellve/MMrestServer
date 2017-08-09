@@ -7,7 +7,6 @@ import edu.umassmed.big.mmremote.handlers.BusyHandler;
 import edu.umassmed.big.mmremote.handlers.SnapImageHandler;
 import edu.umassmed.big.mmremote.handlers.ImageViewHandler;
 import edu.umassmed.big.mmremote.handlers.IndexHandler;
-import edu.umassmed.big.mmremote.handlers.SetDatastore;
 import edu.umassmed.big.mmremote.handlers.SetPosition;
 import edu.umassmed.big.mmremote.handlers.SetROI;
 import edu.umassmed.big.mmremote.handlers.SetProperty;
@@ -68,12 +67,9 @@ public class Service {
         (server.createContext("/get/image/",    		new ImageGetHandler())).getFilters().add(new ParameterFilter());
         (server.createContext("/get/property/", 		new GetProperty())).getFilters().add(new ParameterFilter());
         
-        (server.createContext("/set/acquisition/", 		new SetDatastore())).getFilters().add(new ParameterFilter());
         (server.createContext("/set/property/", 		new SetProperty())).getFilters().add(new ParameterFilter());
         (server.createContext("/set/position/", 		new SetPosition())).getFilters().add(new ParameterFilter());
-        (server.createContext("/set/ROI/", 				new SetROI())).getFilters().add(new ParameterFilter());
-        (server.createContext("/set/datastore/", 		new SetDatastore())).getFilters().add(new ParameterFilter());
-        
+        (server.createContext("/set/ROI/", 				new SetROI())).getFilters().add(new ParameterFilter()); 
     }
     
     

@@ -13,9 +13,9 @@ import org.micromanager.display.DisplayWindow;
 import mmcorej.TaggedImage;
 
 import edu.umassmed.big.mmremote.Message;
+import edu.umassmed.big.mmremote.SetCoordinates;
+import edu.umassmed.big.mmremote.SetDatastore;
 import edu.umassmed.big.mmremote.mmKNIME;
-import edu.umassmed.big.mmremote.handlers.SetDatastore;
-import edu.umassmed.big.mmremote.handlers.SetCoordinates;
 
 
 /**
@@ -43,6 +43,7 @@ public class SnapImageHandler  extends Handler {
         	// check if we have any coordinates first, if we have no coordinates, then just snap a live image
         	Coords coord = new SetCoordinates().parseParams(params);
         	if (coord == null) {
+        		mmKNIME.core.logMessage("µmKNIME: Snapping a live image."); 
         		mmKNIME.si.live().snap(true);
         	}
         	else {

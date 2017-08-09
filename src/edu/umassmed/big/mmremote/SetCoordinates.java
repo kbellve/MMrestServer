@@ -1,7 +1,6 @@
-package edu.umassmed.big.mmremote.handlers;
+package edu.umassmed.big.mmremote;
 
 import org.micromanager.data.Coords;
-import edu.umassmed.big.mmremote.mmKNIME;
 
 import java.io.IOException;
 import java.util.Map;
