@@ -164,16 +164,15 @@ tr:nth-child(odd) {
             Currently permissible POST operations are:
             
             <ul>
-            	<li><a href="#setAcquisition">/set/acquisition/</a></li>
-                <li><a href="#setPosition">/set/position/</a></li>
+            	<li><a href="#setPosition">/set/position/</a></li>
                 <li><a href="#setProperty">/set/property/</a></li>
             </ul>
             
         </div>
         
          <div>          
-            <h2>Acquire requests</h2>
-            ACQUIRE requests &mu;Manager to snap a single image.  
+            <h2>Snap requests</h2>
+            SNAP requests &mu;Manager to snap a single image.  
            
             <br>
             <br> 
@@ -181,8 +180,7 @@ tr:nth-child(odd) {
             Currently permissible POST operations are:
             
             <ul>
-                <li><a href="#acquireImage">/acquire/image/</a></li>
-                <li><a href="#acquireImageandAdd">/acquire/imageandadd/</a></li>
+                <li><a href="#snapImage">/snap/image/</a></li>
             </ul>
             
         </div>
@@ -392,134 +390,7 @@ tr:nth-child(odd) {
                 </tr>           
             </table>
         </div> 
-        <div>
-            <h2><a name="setAcquisition" href="/set/acquisition/">/set/acquisition/</a></h2>
-            Set the parameters to an acquisition but doesn't start that acquisition. 
-            
-            <br><br>
-            
-            Currently, this only appears to work with &mu;Manager 1.4 and not 2.0
-            
-            <br><br>
-            
-            Note that labels and property names are <b>CaSe SeNsItiVe</b>.
-            
-            <br><br>
-            
-            <i>Example</i> 
-            <span>
-            	Set the <i>Exposure</i> time of the <i>DCam</i> device to <i>10</i> ms:
-                <br>
-                <a href="http://localhost:8000/set/acquisition/?name=test&directory=/tmp&frames=10&channels=1&slices=10&positions=1&show=true&save=true">
-                    http://localhost:8000/set/acquisition/?name=test&directory=tmp&frames=10&channels=1&slices=10&positions=1&show=true&save=true
-                </a>
-                <br><br>
-            </span>
-
-            
-            <table>
-                <tr>
-                    <th>
-                        Field
-                    </th>
-                    <th>
-                        Prevalence
-                    </th>
-                    <th>
-                        Description
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-                        name
-                    </td>
-                    <td>
-                        <i>Required</i>
-                    </td>
-                    <td>
-                        [String] A unique acquisition name. An error will return if using a previously used name.
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        directory
-                    </td>
-                    <td>
-                        <i>Required</i>
-                    </td>
-                    <td>
-                        [String] The directory that the acquisition will be saved in.
-                    </td>
-                </tr> 
-                <tr>
-                    <td>
-                        frames
-                    </td>
-                    <td>
-                        <i>Required</i>
-                    </td>
-                    <td>
-                        [Int] The number of frames to collect
-                    </td>
-                </tr>    
-                <tr>
-                    <td>
-                        channels
-                    </td>
-                    <td>
-                        <i>Required</i>
-                    </td>
-                    <td>
-                        [Int] The number of channels to collect
-                    </td>
-                </tr>  
-                <tr>
-                    <td>
-                        slices
-                    </td>
-                    <td>
-                        <i>Required</i>
-                    </td>
-                    <td>
-                        [Int] The number of slices to collect
-                    </td>
-                </tr> 
-                <tr>
-                    <td>
-                        positions
-                    </td>
-                    <td>
-                        <i>Required</i>
-                    </td>
-                    <td>
-                        [Int] The number of XY positions to collect
-                    </td>
-                </tr>
-                    <tr>
-                    <td>
-                        show
-                    </td>
-                    <td>
-                        <i>Optional</i>
-                    </td>
-                    <td>
-                        [<i>true</i>:false] Show images during acquisition
-                    </td>
-                </tr>  
-                    <tr>
-                    <td>
-                        save
-                    </td>
-                    <td>
-                        <i>Optional</i>
-                    </td>
-                    <td>
-                        [<i>true</i>:false] Save images during acquisition
-                    </td>
-                </tr>    
-                                      
-            </table>
-        </div>        
+       
         <div>
             <h2><a name="setProperty" href="/set/property/">/set/property/</a></h2>
             Set an MMCore parameter. This is a generic property setter without bounds
@@ -600,8 +471,11 @@ tr:nth-child(odd) {
             </table>
         </div>        
         <div>
-            <h2><a name="acquireImage" href="/acquire/image/">/acquire/image/</a></h2>
-            Instructs &mu;Manager to acquire a single image with the current settings, optionally changing the exposure 
+            <h2><a name="snapImage" href="/snap/image/">/snap/image/</a></h2>
+            Instructs &mu;Manager to acquire a single image with the current settings, optionally changing the exposure before snap.
+            If no coordinates are passed, a single image will be snapped, overwriting the last image snapped and shown in the Snap/Live View Window.
+            If coordinates are passed, a ram Datastore will automatically be created. Datastores do not allow overwriting of images.
+            
             
             <br><br>
             
@@ -618,14 +492,14 @@ tr:nth-child(odd) {
             <span>
             	Acquire a single image with an option <i>Exposure</i> time <i>10</i> ms:
                 <br>
-                <a href="http://localhost:8000/acquire/image/?exposure=10">
-                    http://localhost:8000/acquire/image/?exposure=10
+                <a href="http://localhost:8000/snap/image/?exposure=10">
+                    http://localhost:8000/snap/image/?exposure=10
                 </a>
                 <br><br>
             </span>
    
             <table>
-                <tr>
+               <tr>
                     <th>
                         Field
                     </th>
@@ -646,67 +520,27 @@ tr:nth-child(odd) {
                     <td>
                         [Int] The time in ms of exposure.
                     </td>
-                </tr>        
-            </table>
-        </div>        
-        <div>
-            <h2><a name="acquireImageandAdd" href="/acquire/imageandadd/">/acquire/imageandadd/</a></h2>
-            Instructs &mu;Manager to snap a single image and adds it to a previously created acquisition, see <a href="#setAcquisition">/set/acquisition/</a>
-            
-            <br><br>
-            
-            Currently, this defaults to integer properties, though could be adapted
-            in the future for all property types.
-            
-            <br><br>
-            
-            Note that labels and property names are <b>CaSe SeNsItiVe</b>.
-            
-            <br><br>
-            
-            <i>Example</i> 
-            <span>
-            	Set the <i>Exposure</i> time of the <i>DCam</i> device to <i>10</i> ms:
-                <br>
-                <a href="http://localhost:8000/acquire/imageandadd/?name=test&frame=0&channel=0&slice=0&position=0">
-                    http://localhost:8000/acquire/imageandadd/?name=test&frame=0&channel=0&slice=0&position=0
-                </a>
-                <br><br>
-            </span>
-
-
- 			<table>
-                <tr>
-                    <th>
-                        Field
-                    </th>
-                    <th>
-                        Prevalence
-                    </th>
-                    <th>
-                        Description
-                    </th>
-                </tr>
+                </tr> 
                 <tr>
                     <td>
-                        name
+                        title
                     </td>
                     <td>
-                        <i>Required</i>
+                        <i>Optional</i>
                     </td>
                     <td>
-                        [String] The acquisition that the new image will be added to.
+                        [String] Title of new window.
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        frames
+                        time
                     </td>
                     <td>
-                        <i>Required</i>
+                        <i>Optional</i>
                     </td>
                     <td>
-                        [Int] The frame position of the new image, 0 indexed
+                        [Int] The time coordinate position of the new image, 0 indexed
                     </td>
                 </tr>    
                 <tr>
@@ -714,21 +548,21 @@ tr:nth-child(odd) {
                         channels
                     </td>
                     <td>
-                        <i>Required</i>
+                        <i>Optional</i>
                     </td>
                     <td>
-                        [Int] The channel position of the new image, 0 indexed
+                        [Int] The channel coordinate position of the new image, 0 indexed
                     </td>
                 </tr>  
                 <tr>
                     <td>
-                        slices
+                        z
                     </td>
                     <td>
-                        <i>Required</i>
+                        <i>Optional</i>
                     </td>
                     <td>
-                        [Int] The slice position of the new image, 0 indexed.
+                        [Int] The z coordinate position of the new image, 0 indexed.
                     </td>
                 </tr> 
                 <tr>
@@ -736,24 +570,14 @@ tr:nth-child(odd) {
                         position
                     </td>
                     <td>
-                        <i>Required</i>
-                    </td>
-                    <td>
-                        [Int] The XY location of the new image, 0 indexed
-                    </td>
-                </tr> 
-                <tr>
-                    <td>
-                        exposure
-                    </td>
-                    <td>
                         <i>Optional</i>
                     </td>
                     <td>
-                        [Int] The time in ms of exposure.
+                        [Int] The coordinate position of the new image, 0 indexed
                     </td>
                 </tr> 
             </table>
         </div>        
+        
     </body>
 </html>

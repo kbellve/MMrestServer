@@ -13,7 +13,7 @@ public class IndexHandler extends PageHandler {
     @Override
     protected InputStream getFileStream () {
         // Read file from a resource folder inside the JAR:
-        return IndexHandler.class.getResourceAsStream("../resources/overview.html");    
+        return IndexHandler.class.getResourceAsStream("/edu/umassmed/big/mmremote/resources/overview.html");    
     }
     
 }

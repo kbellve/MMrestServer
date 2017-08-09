@@ -27,7 +27,7 @@ public class ImageGetHandler implements HttpHandler  {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-    	mmKNIME.core.logMessage("µmKNIME: Handling request.");        
+    	mmKNIME.core.logMessage("µmKNIME: Handling Get Image request.");        
        
         ImagePlus imagePlus   = mmKNIME.si.getSnapLiveManager().getDisplay().getImagePlus();
         
