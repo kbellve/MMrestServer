@@ -17,9 +17,7 @@ public class BusyHandler extends Handler {
     
     @Override
     protected String getResponse() throws IOException {
-    	mmKNIME.core.logMessage("µmKNIME: Opening an Acquisition");
-        
-        // This function checks to see if a particular device is busy if passed with a device=, using deviceBusy()
+    	// This function checks to see if a particular device is busy if passed with a device=, using deviceBusy()
         // if nothing is passed, then the systemBusy() is called which will return true if any device is busy
         
         try {
