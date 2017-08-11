@@ -30,6 +30,7 @@ abstract public class PageHandler implements HttpHandler  {
         exchange.sendResponseHeaders(200, response.length());
         OutputStream os     = exchange.getResponseBody();
         os.write(response.getBytes());
+        os.flush();
         os.close();
     }
     

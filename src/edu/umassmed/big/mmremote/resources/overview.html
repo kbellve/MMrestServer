@@ -127,7 +127,6 @@ tr:nth-child(odd) {
             
             <br><br>
      
-            
         </div>
         
         
@@ -416,7 +415,6 @@ tr:nth-child(odd) {
                 <br><br>
             </span>
 
-            
             <table>
                 <tr>
                     <th>
@@ -536,10 +534,11 @@ tr:nth-child(odd) {
             </table>
             <table>
              <caption style="text-align: left;">Coordinate Options</caption>
-               <tr><td colspan="3">
+               <tr>
+               <td colspan="3">
                 If you are using a datastore, coordinates must also be passed to set the insert location of the new image. 
            	The location must not overwrite an image already in the datastore.
-                </td></tr>
+               </td></tr>
                <tr>
                     <th>
                         Field
@@ -600,11 +599,13 @@ tr:nth-child(odd) {
             </table>
             <table>
              <caption style="text-align: left;">Datastore Options</caption>
-               <tr><td colspan="3">
+               	<tr>
+               	<td colspan="3">
   					A datastore will only be created if the current window does not already have a datastore attached, and 
            	coordinates are also being passed.
             
-                </td></tr>
+                </td>
+                </tr>
                <tr>
                     <th>
                         Field
@@ -625,7 +626,7 @@ tr:nth-child(odd) {
                         <i>Default</i>
                     </td>
                     <td>
-                        µManager creates a ram-backed Datastore by default
+                        &mu;Manager creates a ram-backed Datastore by default
                     </td>
                 </tr>  
                 <tr>
@@ -636,7 +637,7 @@ tr:nth-child(odd) {
                         <i>Optional</i>
                     </td>
                     <td>
-                        [string] File name used by µManager to back a Datastore using a mutltipage tiff
+                        [string] File name used by &mu;Manager to back a Datastore using a mutltipage tiff
                     </td>
                 </tr>  
                 <tr>
@@ -647,7 +648,7 @@ tr:nth-child(odd) {
                         <i>Optional</i>
                     </td>
                     <td>
-                        [string] File name used by µManager to back a Datastore using single plane tiffs
+                        [string] File name used by &mu;Manager to back a Datastore using single plane tiffs
                     </td>
                 </tr> 
                 <tr>
@@ -658,7 +659,7 @@ tr:nth-child(odd) {
                         <i>Optional</i>
                     </td>
                     <td>
-                        [string] directory used by µManager to back a Datastore
+                        [string] directory used by &mu;Manager to back a Datastore
                     </td>
                 </tr> 
                 <tr>
@@ -669,7 +670,7 @@ tr:nth-child(odd) {
                         <i>Optional</i>
                     </td>
                     <td>
-                        [0|1] Instructs µManager to manage the datastore 
+                        [0|1] Instructs &mu;Manager to manage the datastore 
                     </td>
                 </tr> 
                 <tr>
@@ -680,11 +681,9 @@ tr:nth-child(odd) {
                         <i>Optional</i>
                     </td>
                     <td>
-                        [0|1] Instructs µManager to split the metadata into a separate file 
+                        [0|1] Instructs &mu;Manager to split the metadata into a separate file 
                     </td>
-                </tr> 
-  				
-                
+                </tr>     
             </table>
         </div>        
         
