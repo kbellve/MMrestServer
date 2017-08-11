@@ -17,7 +17,7 @@ A (very) basic **RESTserver** for [MicroManager](https://micro-manager.org/).
 There are two ways to use this:
 
 * Use the precompiled .jar directly.
-    Download the [/dist/%C2%B5mKNIME.jar](https://github.com/kbellve/MMrestServer/blob/master/dist/%C2%B5mKNIME.jar) and place it in your MicroManager plugins folder. 
+    Download the [/dist/µmKNIME.jar](https://github.com/kbellve/MMrestServer/blob/master/dist/%C2%B5mKNIME.jar) and place it in your MicroManager plugins folder. 
     Normally, this would be somewhere like /micro-manager/mmplugins/
 
 
