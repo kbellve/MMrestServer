@@ -19,7 +19,7 @@ import java.util.Map;
  * 
  *  @author kdb
  */
-public class Datastore {
+public class CreateDatastore {
  
     public Datastore parseParams (Map<String, Object>   params) throws IOException {
     	

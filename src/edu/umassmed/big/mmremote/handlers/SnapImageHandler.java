@@ -1,21 +1,16 @@
 package edu.umassmed.big.mmremote.handlers;
 
 import java.io.IOException;
-
-
-import com.google.gson.Gson;
-
+import org.micromanager.data.Coords;
 import org.micromanager.data.Datastore;
 import org.micromanager.data.Image;
-import org.micromanager.data.Coords;
 import org.micromanager.display.DisplayWindow;
-
-import mmcorej.TaggedImage;
-
-import edu.umassmed.big.mmremote.Message;
-import edu.umassmed.big.mmremote.Coordinates;
-import edu.umassmed.big.mmremote.Datastore;
+import com.google.gson.Gson;
 import edu.umassmed.big.mmremote.mmKNIME;
+import edu.umassmed.big.mmremote.CreateDatastore;
+import edu.umassmed.big.mmremote.CreateCoordinates;
+import edu.umassmed.big.mmremote.Message;
+import mmcorej.TaggedImage;
 
 
 /**
@@ -41,7 +36,7 @@ public class SnapImageHandler  extends Handler {
             }
         	
         	// check if we have any coordinates first, if we have no coordinates, then just snap a live image
-        	Coords coord = new Coordinates().parseParams(params);
+        	Coords coord = new CreateCoordinates().parseParams(params);
         	if (coord == null) {
         		mmKNIME.core.logMessage("µmKNIME: Snapping a live image."); 
         		mmKNIME.si.live().snap(true);
@@ -55,7 +50,7 @@ public class SnapImageHandler  extends Handler {
 	            if (display == null) 
 	            {
 	            	mmKNIME.core.logMessage("µmKNIME: Creating new datastore...");  
-	            	store = new Datastore().parseParams(params);
+	            	store = new CreateDatastore().parseParams(params);
 	                if (store != null) { 
 	                	mmKNIME.core.logMessage("µmKNIME: Creating new window with attached datastore...");  
 	                    display = mmKNIME.si.displays().createDisplay(store);

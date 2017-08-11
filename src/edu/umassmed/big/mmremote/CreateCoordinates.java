@@ -11,7 +11,7 @@ import java.util.Map;
  * 
  *  @author kdb
  */
-public class Coordinates {
+public class CreateCoordinates {
 
     
     public Coords parseParams (Map<String, Object>   params) throws IOException {
