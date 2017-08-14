@@ -2,7 +2,7 @@ package edu.umassmed.big.mmremote;
 
 import com.sun.net.httpserver.HttpServer;
 //import edu.umassmed.big.mmremote.handlers.ImageGetHandler;
-import edu.umassmed.big.mmremote.handlers.ImageGetHandler;
+import edu.umassmed.big.mmremote.handlers.GetImage;
 import edu.umassmed.big.mmremote.handlers.BusyHandler;
 import edu.umassmed.big.mmremote.handlers.SnapImageHandler;
 import edu.umassmed.big.mmremote.handlers.ImageViewHandler;
@@ -56,7 +56,7 @@ public class Service {
         createServer();
 
         // Internal documentation handlers:
-        server.createContext("/view/image/",    		new ImageViewHandler());
+        //server.createContext("/view/image/",    		new ImageViewHandler());
         server.createContext("/",               		new IndexHandler());
         
         // POST -> Tells µManager to acquire an image
@@ -64,7 +64,7 @@ public class Service {
         
         // SET / GET request handlers:
         (server.createContext("/get/busy/",    			new BusyHandler())).getFilters().add(new ParameterFilter());
-        (server.createContext("/get/image/",    		new ImageGetHandler())).getFilters().add(new ParameterFilter());
+        (server.createContext("/get/image/",    		new GetImage())).getFilters().add(new ParameterFilter());
         (server.createContext("/get/property/", 		new GetProperty())).getFilters().add(new ParameterFilter());
         
         (server.createContext("/set/property/", 		new SetProperty())).getFilters().add(new ParameterFilter());

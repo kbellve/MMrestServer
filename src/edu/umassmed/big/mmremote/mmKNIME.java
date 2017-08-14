@@ -1,51 +1,211 @@
 package edu.umassmed.big.mmremote;
 
-import mmcorej.CMMCore;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.Map;
+
 import org.micromanager.MenuPlugin;
 import org.micromanager.Studio;
-
+import org.micromanager.data.Coords;
+import org.micromanager.data.Datastore;
+import org.micromanager.display.DisplayWindow;
 import org.scijava.plugin.Plugin;
 import org.scijava.plugin.SciJavaPlugin;
 
+import mmcorej.CMMCore;
+
 /**
- *  Implement a REST service hook into MicroManager. This enables external
- *  applications to retrieve information about the running system, and perhaps
- *  some day manipulate it.
- * 
- *  @author Matthijs Dorst, Karolinska Institutet, Stockholm, Sweden.
- *	@author Karl Bellve, Biomedical Imaging Group, University of Massachusetts Medical School, Worcester, MA USA
+ * Implement a REST service hook into MicroManager. This enables external
+ * applications to retrieve information about the running system, and perhaps
+ * some day manipulate it.
+ *
+ * @author Matthijs Dorst, Karolinska Institutet, Stockholm, Sweden.
+ * @author Karl Bellve, Biomedical Imaging Group, University of Massachusetts
+ *         Medical School, Worcester, MA USA
  */
 
 @Plugin(type = MenuPlugin.class)
 public class mmKNIME implements MenuPlugin, SciJavaPlugin {
-	
+
+	public static CMMCore core;
 	public static final String menuName = "µmKNIME";
-	public static final String tooltipDescription = "Web Gateway between KNIME and µManager";
 
 	// Provides access to the MicroManager API.
 	public static Studio si;
-	public static CMMCore core;	    
-    
-    @Override
-    public void setContext(Studio studio) {
-    	mmKNIME.si = studio;
-    	mmKNIME.core = studio.getCMMCore();
-    }
+	public static final String tooltipDescription = "Web Gateway between KNIME and µManager";
 
-    @Override
-    public void onPluginSelected() {
-    	mmKNIME.core.logMessage("µmKNIME: Ready for control by KNIME, active on port 8000.");
-        try {
-            Service.start();
-        } catch (Exception e) {
-            mmKNIME.si.getLogManager().logError(e);
-        }
-    }
+	public static Coords createCoordinates(final Map<String, Object> params) throws IOException {
 
-    
-    @Override public String getName() { return menuName; }
-    @Override public String getSubMenu() { return "Beta"; }
-    @Override public String getHelpText() { return tooltipDescription; }
-    @Override public String getVersion()     { return "0.1";               }
-    @Override public String getCopyright()   { return "Matthijs Dorst and Karl Bellve under MIT License";  } 
+		try {
+
+			if (params == null) {
+				return null;
+			}
+
+			int channel = 0, position = 0, time = 0, z = 0;
+
+			if (params.containsKey("z") || params.containsKey("time") || params.containsKey("channel")
+					|| params.containsKey("position")) {
+				mmKNIME.core.logMessage("µmKNIME: Created coordinates");
+
+				if (params.containsKey("z")) {
+					z = Integer.parseInt(params.get("z").toString());
+				}
+				if (params.containsKey("time")) {
+					time = Integer.parseInt(params.get("time").toString());
+				}
+				if (params.containsKey("channel")) {
+					channel = Integer.parseInt(params.get("channel").toString());
+				}
+				if (params.containsKey("position")) {
+					position = Integer.parseInt(params.get("position").toString());
+				}
+
+				Coords.CoordsBuilder builder = mmKNIME.si.data().getCoordsBuilder();
+				builder = builder.z(z).time(time).channel(channel).stagePosition(position);
+				return (builder.build());
+			}
+
+		} catch (final Exception e) {
+			mmKNIME.si.getLogManager().showError(e);
+		}
+
+		return null;
+	}
+
+	public static Datastore createDatastore(final Map<String, Object> params) throws IOException {
+
+		Datastore store = null;
+
+		try {
+
+			boolean bSplit = false, bMetadata = false, bManage = false;
+			String sDirectory = "/tmp";
+
+			if (params.containsKey("metadata")) {
+				bMetadata = Boolean.parseBoolean(params.get("metadata").toString());
+			}
+			if (params.containsKey("split")) {
+				bSplit = Boolean.parseBoolean(params.get("split").toString());
+			}
+			if (params.containsKey("manage")) {
+				bManage = Boolean.parseBoolean(params.get("manage").toString());
+			}
+
+			if (params.containsKey("multitiff")) {
+				if (params.containsKey("directory")) {
+					sDirectory = params.get("directory").toString();
+				}
+				store = mmKNIME.si.data().createMultipageTIFFDatastore(sDirectory, bMetadata, bSplit);
+				mmKNIME.core.logMessage("µmKNIME: Created a Multipage TIFF datastore");
+			} else if (params.containsKey("singletiff")) {
+				if (params.containsKey("directory")) {
+					sDirectory = params.get("directory").toString();
+				}
+				store = mmKNIME.si.data().createSinglePlaneTIFFSeriesDatastore(sDirectory);
+				mmKNIME.core.logMessage("µmKNIME: Created a Single Plane TIFF datastore");
+
+			} else { // default data store
+				store = mmKNIME.si.data().createRAMDatastore();
+				mmKNIME.core.logMessage("µmKNIME: Created a RAM datastore");
+			}
+
+			if (store != null) {
+				if (bManage == true) {
+					// DisplayWindow display;
+					// display = mmKNIME.si.displays().createDisplay(store);
+					mmKNIME.si.displays().manage(store);
+				}
+			} else {
+				throw new org.micromanager.internal.utils.MMException("Failed to create Datastore");
+			}
+
+			return store;
+
+		} catch (final Exception e) {
+			mmKNIME.si.getLogManager().showError(e);
+		}
+
+		return null;
+	}
+
+	public static DisplayWindow findDisplay(final Map<String, Object> params) throws IOException {
+
+		DisplayWindow display = null;
+
+		try {
+			if (params == null) {
+				return null;
+			}
+
+			if (params.containsKey("title")) {
+				// lets try and find window matching title and use that as a
+				// display
+				final Iterator ImageWindow = mmKNIME.si.getDisplayManager().getAllImageWindows().iterator();
+
+				while (ImageWindow.hasNext()) {
+					display = (DisplayWindow) ImageWindow.next();
+					if (params.get("title").toString().equals(display.getName())) {
+						mmKNIME.core.logMessage("µmKNIME: Found Display Window matching title.");
+						return (display);
+					} else {
+						display = null;
+						mmKNIME.core.logMessage("µmKNIME: Failed to find Display Window matching title.");
+					}
+				}
+			}
+		} catch (final Exception e) {
+			mmKNIME.si.getLogManager().showError(e);
+		}
+
+		return null;
+
+	}
+
+	@Override
+	public String getCopyright() {
+		return "Matthijs Dorst and Karl Bellve under MIT License";
+	}
+
+	@Override
+	public String getHelpText() {
+		return mmKNIME.tooltipDescription;
+	}
+
+	@Override
+	public String getName() {
+		return mmKNIME.menuName;
+	}
+
+	@Override
+	public String getSubMenu() {
+		return "Beta";
+	}
+
+	@Override
+	public String getVersion() {
+		return "0.1";
+	}
+
+	@Override
+	public void onPluginSelected() {
+		mmKNIME.core.logMessage("µmKNIME: Ready for control by KNIME, active on port 8000.");
+		try {
+			Service.start();
+		} catch (final Exception e) {
+			mmKNIME.si.getLogManager().logError(e);
+		}
+	}
+
+	@Override
+	public void setContext(final Studio studio) {
+		mmKNIME.si = studio;
+		mmKNIME.core = studio.getCMMCore();
+	}
+
+	// public Coords CreateWindow (Map<String, Object> params) throws
+	// IOException {
+
+	// }
+
 }
