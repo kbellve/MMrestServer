@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.micromanager.MenuPlugin;
 import org.micromanager.Studio;
+import org.micromanager.acquisition.SequenceSettings;
 import org.micromanager.data.Coords;
 import org.micromanager.data.Datastore;
 import org.micromanager.display.DisplayWindow;
@@ -160,6 +161,85 @@ public class mmKNIME implements MenuPlugin, SciJavaPlugin {
 
 		return null;
 
+	}
+
+	public static SequenceSettings ModifyAcquisitionSettings(final Map<String, Object> params) throws IOException {
+
+		final SequenceSettings settings = mmKNIME.si.acquisitions().getAcquisitionSettings();
+
+		try {
+
+			if (params == null) {
+				return null;
+			}
+
+			if (settings != null) {
+				if (params.containsKey("directory")) {
+					settings.prefix = params.get("directory").toString();
+				}
+
+				if (params.containsKey("name")) {
+					settings.prefix = params.get("name").toString();
+				}
+
+				if (params.containsKey("comment")) {
+					settings.comment = params.get("comment").toString();
+				}
+
+				if (params.containsKey("save")) {
+					if (params.get("save").toString().equalsIgnoreCase("false")) {
+						settings.save = false;
+					} else {
+						settings.save = true;
+					}
+				}
+
+				if (params.containsKey("slicesFirst")) {
+					if (params.get("slicesFirst").toString().equalsIgnoreCase("false")) {
+						settings.slicesFirst = false;
+					} else {
+						settings.slicesFirst = true;
+					}
+				}
+
+				if (params.containsKey("timeFirst")) {
+					if (params.get("timeFirst").toString().equalsIgnoreCase("false")) {
+						settings.timeFirst = false;
+					} else {
+						settings.timeFirst = true;
+					}
+				}
+
+				if (params.containsKey("autofocus")) {
+					if (params.get("autofocus").toString().equalsIgnoreCase("false")) {
+						settings.useAutofocus = false;
+					} else {
+						settings.useAutofocus = true;
+					}
+				}
+
+				if (params.containsKey("display")) {
+					if (params.get("display").toString().equalsIgnoreCase("false")) {
+						settings.shouldDisplayImages = false;
+					} else {
+						settings.shouldDisplayImages = true;
+					}
+				}
+
+				if (params.containsKey("frames")) {
+					final int frames = Integer.parseInt(params.get("frames").toString());
+					settings.numFrames = frames;
+				}
+
+				mmKNIME.core.logMessage("µmKNIME: Resetting modified settings");
+				mmKNIME.si.acquisitions().setAcquisitionSettings(settings);
+			}
+
+		} catch (final Exception e) {
+			mmKNIME.si.getLogManager().showError(e);
+		}
+
+		return settings;
 	}
 
 	@Override

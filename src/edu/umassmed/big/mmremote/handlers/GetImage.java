@@ -26,19 +26,15 @@ public class GetImage extends ImageHandler {
 		ImagePlus imageplus = null;
 
 		try {
-			if (display != null) {
-				final Coords coord = mmKNIME.createCoordinates(this.params);
-				if (coord != null) {
-					mmKNIME.core.logMessage("µmKNIME: Found Display and Coordinates");
-					display.setDisplayedImageTo(coord);
-					imageprocessor = mmKNIME.si.data().ij().createProcessor(display.getDatastore().getImage(coord));
-				} else {
-					mmKNIME.core.logMessage("µmKNIME: Found Display but not Coordinates");
-					imageprocessor = mmKNIME.si.data().ij().createProcessor(display.getDatastore().getAnyImage());
-				}
-			} else {
-				mmKNIME.core.logMessage("µmKNIME: Retrieving image from Snap/Live View");
+			if (display == null) {
 				display = mmKNIME.si.getSnapLiveManager().getDisplay();
+			}
+
+			final Coords coord = mmKNIME.createCoordinates(this.params);
+			if (coord != null) {
+				display.setDisplayedImageTo(coord);
+				imageprocessor = mmKNIME.si.data().ij().createProcessor(display.getDatastore().getImage(coord));
+			} else {
 				imageprocessor = mmKNIME.si.data().ij().createProcessor(display.getDatastore().getAnyImage());
 			}
 
