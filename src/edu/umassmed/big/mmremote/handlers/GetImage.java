@@ -7,6 +7,7 @@ import org.micromanager.display.DisplayWindow;
 
 import edu.umassmed.big.mmremote.mmKNIME;
 import ij.ImagePlus;
+import ij.process.ImageProcessor;
 
 /**
  * Handle GET (retrieval) requests. These should never modify anything, only
@@ -20,21 +21,39 @@ public class GetImage extends ImageHandler {
 	@Override
 	public ImagePlus getResponse() throws IOException {
 
-		final DisplayWindow display = mmKNIME.findDisplay(this.params);
+		DisplayWindow display = mmKNIME.findDisplay(this.params);
+		ImageProcessor imageprocessor = null;
+		ImagePlus imageplus = null;
 
-		if (display != null) {
-			final Coords coord = mmKNIME.createCoordinates(this.params);
-			if (coord != null) {
-				mmKNIME.core.logMessage("µmKNIME: Found coordinates");
-				display.setDisplayedImageTo(coord);
+		try {
+			if (display != null) {
+				final Coords coord = mmKNIME.createCoordinates(this.params);
+				if (coord != null) {
+					mmKNIME.core.logMessage("µmKNIME: Found Display and Coordinates");
+					display.setDisplayedImageTo(coord);
+					imageprocessor = mmKNIME.si.data().ij().createProcessor(display.getDatastore().getImage(coord));
+				} else {
+					mmKNIME.core.logMessage("µmKNIME: Found Display but not Coordinates");
+					imageprocessor = mmKNIME.si.data().ij().createProcessor(display.getDatastore().getAnyImage());
+				}
+			} else {
+				mmKNIME.core.logMessage("µmKNIME: Retrieving image from Snap/Live View");
+				display = mmKNIME.si.getSnapLiveManager().getDisplay();
+				imageprocessor = mmKNIME.si.data().ij().createProcessor(display.getDatastore().getAnyImage());
 			}
 
-			// I know this is lazy, but this is the simplest way to get an
-			// ImagePlus image from a datastore, which uses µManager Image.
-			return (display.getImagePlus());
-
-		} else {
-			return (mmKNIME.si.getSnapLiveManager().getDisplay().getImagePlus());
+			if (imageprocessor != null) {
+				imageplus = new ImagePlus(display.getName(), imageprocessor);
+				if (imageplus != null) {
+					return (imageplus);
+				}
+			}
+		} catch (final Exception e) {
+			mmKNIME.si.getLogManager().showError(e);
 		}
+
+		return null;
+
 	}
+
 }
