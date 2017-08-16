@@ -163,6 +163,7 @@ public class mmKNIME implements MenuPlugin, SciJavaPlugin {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public static SequenceSettings ModifyAcquisitionSettings(final Map<String, Object> params) throws IOException {
 
 		final SequenceSettings settings = mmKNIME.si.acquisitions().getAcquisitionSettings();
@@ -174,12 +175,14 @@ public class mmKNIME implements MenuPlugin, SciJavaPlugin {
 			}
 
 			if (settings != null) {
-				if (params.containsKey("directory")) {
-					settings.prefix = params.get("directory").toString();
+				if (params.containsKey("root")) {
+					settings.root = params.get("root").toString();
+					mmKNIME.core.logMessage("µmKNIME: root " + settings.root);
 				}
 
-				if (params.containsKey("name")) {
-					settings.prefix = params.get("name").toString();
+				if (params.containsKey("prefix")) {
+					settings.prefix = params.get("prefix").toString();
+					mmKNIME.core.logMessage("µmKNIME: prefix " + settings.prefix);
 				}
 
 				if (params.containsKey("comment")) {
@@ -191,6 +194,14 @@ public class mmKNIME implements MenuPlugin, SciJavaPlugin {
 						settings.save = false;
 					} else {
 						settings.save = true;
+					}
+				}
+
+				if (params.containsKey("relativeZ")) {
+					if (params.get("relativeZSlice").toString().equalsIgnoreCase("false")) {
+						settings.relativeZSlice = false;
+					} else {
+						settings.relativeZSlice = true;
 					}
 				}
 
@@ -218,6 +229,10 @@ public class mmKNIME implements MenuPlugin, SciJavaPlugin {
 					}
 				}
 
+				if (params.containsKey("skipautofocus")) {
+					settings.skipAutofocusCount = Integer.parseInt(params.get("skipautofocus").toString());
+				}
+
 				if (params.containsKey("display")) {
 					if (params.get("display").toString().equalsIgnoreCase("false")) {
 						settings.shouldDisplayImages = false;
@@ -227,8 +242,46 @@ public class mmKNIME implements MenuPlugin, SciJavaPlugin {
 				}
 
 				if (params.containsKey("frames")) {
-					final int frames = Integer.parseInt(params.get("frames").toString());
-					settings.numFrames = frames;
+					settings.numFrames = Integer.parseInt(params.get("frames").toString());
+				}
+
+				if (params.containsKey("cameraTimeout")) {
+					settings.cameraTimeout = Integer.parseInt(params.get("cameraTimeout").toString());
+				}
+
+				if (params.containsKey("interval")) {
+					settings.intervalMs = Double.parseDouble(params.get("interval").toString());
+				}
+				/*
+				 * if (params.containsKey("z")) { final Object obj =
+				 * params.get("z"); settings.slices.clear(); if (obj instanceof
+				 * List<?>) { mmKNIME.core.logMessage("µmKNIME: List: " +
+				 * ((List<String>) obj).size());
+				 *
+				 * for (int x = 0; x < ((List<String>) obj).size(); x++) {
+				 * mmKNIME.core.logMessage("µmKNIME: List: " + ((List<String>)
+				 * obj).get(x).toString());
+				 *
+				 * settings.slices.add(Double.parseDouble(((List<String>)
+				 * obj).get(x).toString())); } } else if (obj instanceof String)
+				 * { mmKNIME.core.logMessage("µmKNIME: String");
+				 * settings.slices.add(Double.parseDouble(params.get("z").
+				 * toString())); }
+				 *
+				 * }
+				 */
+
+				if (params.containsKey("startZ") && params.containsKey("endZ") && params.containsKey("stepZ")) {
+					settings.slices.clear();
+					settings.slices.add(Double.parseDouble(params.get("startZ").toString()));
+					// Step Z seems to be stored not as a pure Z Step, but Z
+					// Step +
+					// Start Z..odd
+					settings.slices.add(Double.parseDouble(params.get("stepZ").toString())
+							+ Double.parseDouble(params.get("startZ").toString()));
+					settings.slices.add(Double.parseDouble(params.get("endZ").toString()));
+				} else if (params.containsKey("startZ") || params.containsKey("endZ") || params.containsKey("stepZ")) {
+					mmKNIME.core.logMessage("µmKNIME: must pass startZ, endZ and stepZ");
 				}
 
 				mmKNIME.core.logMessage("µmKNIME: Resetting modified settings");
@@ -282,10 +335,5 @@ public class mmKNIME implements MenuPlugin, SciJavaPlugin {
 		mmKNIME.si = studio;
 		mmKNIME.core = studio.getCMMCore();
 	}
-
-	// public Coords CreateWindow (Map<String, Object> params) throws
-	// IOException {
-
-	// }
 
 }

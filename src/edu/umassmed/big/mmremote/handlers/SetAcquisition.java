@@ -2,6 +2,8 @@ package edu.umassmed.big.mmremote.handlers;
 
 import java.io.IOException;
 
+import org.micromanager.acquisition.SequenceSettings;
+
 import com.google.gson.Gson;
 
 import edu.umassmed.big.mmremote.Message;
@@ -19,6 +21,9 @@ public class SetAcquisition extends Handler {
 		mmKNIME.core.logMessage("µmKNIME: Set MD Acquistion");
 
 		try {
+
+			Boolean bBlocking = true;
+
 			this.message = new Message("OK");
 			if (this.params.containsKey("stop")) {
 				mmKNIME.core.logMessage("µmKNIME: Stopping all non-blocking MD Acquisitions");
@@ -29,11 +34,20 @@ public class SetAcquisition extends Handler {
 					mmKNIME.si.acquisitions().loadAcquisition(this.params.get("settings").toString());
 				}
 
-				mmKNIME.ModifyAcquisitionSettings(this.params);
+				final SequenceSettings settings = mmKNIME.ModifyAcquisitionSettings(this.params);
 
 				if (this.params.containsKey("run")) {
-					mmKNIME.si.acquisitions().runAcquisitionNonblocking();
-					mmKNIME.core.logMessage("µmKNIME: Running a non-blocking MD acquisition");
+					// mmKNIME.si.acquisitions().runAcquisitionNonblocking();
+					if (this.params.containsKey("blocking")) {
+						if (this.params.get("blocking").toString().equalsIgnoreCase("false")) {
+							mmKNIME.core.logMessage("µmKNIME: Running a non-blocking MD acquisition");
+							bBlocking = false;
+						} else {
+							mmKNIME.core.logMessage("µmKNIME: Running a blocking MD acquisition");
+							bBlocking = true;
+						}
+					}
+					mmKNIME.si.acquisitions().runAcquisitionWithSettings(settings, bBlocking);
 				}
 			}
 
