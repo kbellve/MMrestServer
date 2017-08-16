@@ -84,13 +84,27 @@ public class mmKNIME implements MenuPlugin, SciJavaPlugin {
 			String sDirectory = "/tmp";
 
 			if (params.containsKey("metadata")) {
-				bMetadata = Boolean.parseBoolean(params.get("metadata").toString());
+				if (params.get("metadata").toString().equalsIgnoreCase("true")) {
+					bMetadata = true;
+				} else {
+					bMetadata = false;
+				}
 			}
+
 			if (params.containsKey("split")) {
-				bSplit = Boolean.parseBoolean(params.get("split").toString());
+				if (params.get("metadata").toString().equalsIgnoreCase("true")) {
+					bSplit = true;
+				} else {
+					bSplit = false;
+				}
 			}
+
 			if (params.containsKey("manage")) {
-				bManage = Boolean.parseBoolean(params.get("manage").toString());
+				if (params.get("manage").toString().equalsIgnoreCase("true")) {
+					bManage = true;
+				} else {
+					bManage = false;
+				}
 			}
 
 			if (params.containsKey("multitiff")) {
@@ -163,7 +177,6 @@ public class mmKNIME implements MenuPlugin, SciJavaPlugin {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	public static SequenceSettings ModifyAcquisitionSettings(final Map<String, Object> params) throws IOException {
 
 		final SequenceSettings settings = mmKNIME.si.acquisitions().getAcquisitionSettings();

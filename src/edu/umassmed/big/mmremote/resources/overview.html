@@ -163,6 +163,7 @@ tr:nth-child(odd) {
             <ul>
             	<li><a href="#setPosition">/set/position/</a></li>
                 <li><a href="#setProperty">/set/property/</a></li>
+                <li><a href="#setAcquisition">/set/acquisition/</a></li>
             </ul>
             
         </div>
@@ -466,22 +467,270 @@ tr:nth-child(odd) {
                 </tr>                 
             </table>
         </div>        
+        
+         <div>
+            <h2><a name="setAcquisition" href="/set/acquisition/">/set/acquisition/</a></h2>
+            This sets up and possibly executes an MD Acquisition. It allows loading a MDA settings file, as well as modifying those settings before running the acquisition. 
+            
+            <br><br>
+            
+            
+            <i>Example</i> 
+            <span>
+            	Run a <i>1 &mu;m 3D Acquisition</i> with an <i>interval of 100ms</i> using a saved <i>MDA settings file</i>:
+                <br>
+                <a href="localhost:8000/set/acquisition/?settings=/storage/big1/kdb/AcqSettings.txt&startZ=0.0&endZ=1&stepZ=0.1&run&prefix=MyImages&root=/tmp&save=true&frames=1&interval=100&blocking=false">
+                    localhost:8000/set/acquisition/?settings=/storage/big1/kdb/AcqSettings.txt
+                    &startZ=0.0&endZ=1&stepZ=0.1&run&prefix=MyImages&root=/tmp&save=true
+                    &frames=1&interval=100&blocking=false
+                </a>
+                <br><br>
+            </span>
+
+            <table>
+                <tr>
+                    <th>
+                        Field
+                    </th>
+                    <th>
+                        Prevalence
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        stop
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        Stops all non-blocking running acquisitions 
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        run
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        Runs the currently configured acquisition
+                    </td>
+                </tr> 
+                <tr>
+                    <td>
+                        settings
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [String] pathway to a previously saved MDA settings file
+                    </td>
+                </tr>  
+                <tr>
+                    <td>
+                        blocking
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [false|true] Runs the currently configured acquisition as either blocking or non-blocking
+                    </td>
+                </tr>   
+                <tr>
+                    <td>
+                        save
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [false|true] Save images while acquiring the currently configured acquisition
+                    </td>
+                </tr>     
+                <tr>
+                    <td>
+                        root
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [String] Directory location to save the currently configured acquisition
+                    </td>
+                </tr>   
+                <tr>
+                    <td>
+                        prefix
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [String] Prefix name for the currently configured acquisition
+                    </td>
+                </tr>   
+                <tr>
+                    <td>
+                        comment
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [String] Comment for the currently configured acquisition
+                    </td>
+                </tr> 
+                 <tr>
+                    <td>
+                        slicesFirst
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [false|true] Slice coordinate changes first
+                    </td>
+                </tr>  
+                 <tr>
+                    <td>
+                        timeFirst
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [false|true] time coordinate changes first
+                    </td>
+                </tr>  
+                <tr>
+                    <td>
+                        relativeZ
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [false|true] Z coordinates relative or absolute
+                    </td>
+                </tr>                  
+                <tr>
+                    <td>
+                        display
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [false|true] Should images be display during acquisition
+                    </td>
+                </tr>    
+                <tr>
+                    <td>
+                        autofocus
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [false|true] Autofocus before acquiring each position/frame
+                    </td>
+                </tr>  
+                <tr>
+                    <td>
+                        skipautofocus
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [Int] How many autofocus opportunities to skip before autofocusing
+                    </td>
+                </tr>   
+                <tr>
+                    <td>
+                        startZ
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [Int] Position to start 3D imaging, in microns 
+                        <br><b>Must be used with endZ and stepZ</b>
+                    </td>
+                </tr>  
+                <tr>
+                    <td>
+                        endZ
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [Int] Position to end 3D imaging, in microns
+                        <br><b>Must be used with startZ and stepZ</b>
+                    </td>
+                </tr>   
+                <tr>
+                    <td>
+                        stepZ
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [Int] Distance between 3D steps, in microns
+                        <br><b>Must be used with startZ and endZ</b>
+                    </td>
+                </tr>         
+                <tr>
+                    <td>
+                        frames
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [Int] How many frames (timepoints) should be acquired
+                    </td>
+                </tr>  
+                 <tr>
+                    <td>
+                        interval
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [Int] How many milliseconds should &mu;Manager wait before acquiring the next image
+                    </td>
+                </tr>  
+                 <tr>
+                    <td>
+                        cameraTimeout
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [Int] How many milliseconds should &mu;Manager wait for camera timeout
+                    </td>
+                </tr>         
+            </table>
+        </div>        
+        
         <div>
             <h2><a name="snapImage" href="/snap/image/">/snap/image/</a></h2>
             Instructs &mu;Manager to acquire a single image with the current settings, optionally changing the exposure before snap.
             If no coordinates are passed, a single image will be snapped, overwriting the last image snapped and shown in the Snap/Live View Window.
             If coordinates are passed, a ram Datastore will automatically be created. Datastores do not allow overwriting of images.
-            
-            
-            <br><br>
-            
-            Currently, this defaults to integer properties, though could be adapted
-            in the future for all property types.
-            
-            <br><br>
-            
-            Note that labels and property names are <b>CaSe SeNsItiVe</b>.
-            
+    
             <br><br>
             
             <i>Example</i> 
@@ -670,7 +919,18 @@ tr:nth-child(odd) {
                         <i>Optional</i>
                     </td>
                     <td>
-                        [0|1] Instructs &mu;Manager to manage the datastore 
+                        [false|true] Instructs &mu;Manager to manage the datastore 
+                    </td>
+                </tr> 
+                <tr>
+                    <td>
+                        metadata
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [false|true] Instructs &mu;Manager to split the metadata into a separate file 
                     </td>
                 </tr> 
                 <tr>
@@ -681,7 +941,7 @@ tr:nth-child(odd) {
                         <i>Optional</i>
                     </td>
                     <td>
-                        [0|1] Instructs &mu;Manager to split the metadata into a separate file 
+                        [false|true] Instructs &mu;Manager to split each stage positions into separate files 
                     </td>
                 </tr>     
             </table>
