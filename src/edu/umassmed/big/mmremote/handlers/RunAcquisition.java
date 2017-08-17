@@ -14,7 +14,7 @@ import edu.umassmed.big.mmremote.mmKNIME;
  *
  * @author kdb
  */
-public class SetAcquisition extends Handler {
+public class RunAcquisition extends Handler {
 
 	@Override
 	protected String getResponse() throws IOException {

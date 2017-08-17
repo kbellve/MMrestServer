@@ -15,7 +15,7 @@ import edu.umassmed.big.mmremote.mmKNIME;
  *
  * @author kdb
  */
-public class SetScript extends Handler {
+public class RunScript extends Handler {
 
 	private class MissingKeyException extends Exception {
 	}
