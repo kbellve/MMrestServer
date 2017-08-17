@@ -14,6 +14,7 @@ import edu.umassmed.big.mmremote.handlers.SetAcquisition;
 import edu.umassmed.big.mmremote.handlers.SetPosition;
 import edu.umassmed.big.mmremote.handlers.SetProperty;
 import edu.umassmed.big.mmremote.handlers.SetROI;
+import edu.umassmed.big.mmremote.handlers.SetScript;
 import edu.umassmed.big.mmremote.handlers.SnapImageHandler;
 
 /**
@@ -51,7 +52,7 @@ public class Service {
 	/**
 	 * Create a new HTTP server instance. Register default handlers for the
 	 * various contexts.
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	private Service() throws Exception {
@@ -73,11 +74,12 @@ public class Service {
 		(this.server.createContext("/set/property/", new SetProperty())).getFilters().add(new ParameterFilter());
 		(this.server.createContext("/set/position/", new SetPosition())).getFilters().add(new ParameterFilter());
 		(this.server.createContext("/set/ROI/", new SetROI())).getFilters().add(new ParameterFilter());
+		(this.server.createContext("/set/script/", new SetScript())).getFilters().add(new ParameterFilter());
 	}
 
 	/**
 	 * Attempt to create a server and set a default executer.
-	 * 
+	 *
 	 * @throws IOException
 	 */
 	private void createServer() throws IOException {

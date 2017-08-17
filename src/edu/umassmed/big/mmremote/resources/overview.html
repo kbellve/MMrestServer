@@ -164,6 +164,7 @@ tr:nth-child(odd) {
             	<li><a href="#setPosition">/set/position/</a></li>
                 <li><a href="#setProperty">/set/property/</a></li>
                 <li><a href="#setAcquisition">/set/acquisition/</a></li>
+                <li><a href="#setScript">/set/script/</a></li>
             </ul>
             
         </div>
@@ -724,6 +725,91 @@ tr:nth-child(odd) {
                 </tr>         
             </table>
         </div>        
+        
+        
+        <div>
+            <h2><a name="setScript" href="/set/script/">/set/script/</a></h2>
+            Either have &mu;Manager load a local script, or execute a remote script sent via the URL.
+            
+            
+            <br><br>
+            
+            Remote scripts might fail due to the limitation of the length of a URL, which is about 2000 characters. 
+            Also, every <b> &#61; </b>  in the script should be escaped with "<b>%3D</b>", without the quotations.
+
+            <br><br>
+            
+            <i>Example</i> 
+            <span>
+            	A modified version of datastoreExample.bsh found in micro-manager/scripts:
+                <br>
+                <a href="http://localhost:8000/set/script/?script=import%20org.micromanager.data.Coords;%20import%20
+                org.micromanager.data.Image;%20import%20org.micromanager.data.Datastore;%20import%20org.micromanager.display.DisplayWindow;%20import%20mmcorej.TaggedImage;%20Datastore%20store%20%3D%20mm.data().createRAMDatastore();%20DisplayWindow%20display%20%3D%20mm.displays().createDisplay(store);%20mm.getCore().snapImage();%20TaggedImage%20tmp%20%3D%20mm.getCore().getTaggedImage();%20Image%20image1%20%3D%20mm.data().convertTaggedImage(tmp);%20image1%20%3D%20image1.copyAtCoords(image1.getCoords().copy().channel(0).build());%20mm.getCore().snapImage();%20tmp%20%3D%20mm.getCore().getTaggedImage();%20Image%20image2%20%3D%20mm.data().convertTaggedImage(tmp);%20image2%20%3D%20image2.copyAtCoords(image1.getCoords().copy().channel(1).build());%20store.putImage(image1);%20store.putImage(image2);%20store.save(Datastore.SaveMode.MULTIPAGE_TIFF,%22test%22);">
+                import org.micromanager.data.Coords;<br>
+				import org.micromanager.data.Image;<br>
+				import org.micromanager.data.Datastore;<br>
+				import org.micromanager.display.DisplayWindow;<br>
+				<br>
+				import mmcorej.TaggedImage;<br>
+				<br>
+				Datastore store = mm.data().createRAMDatastore();<br>
+				DisplayWindow display = mm.displays().createDisplay(store);<br>
+				<br>
+				mm.getCore().snapImage();<br>
+				TaggedImage tmp = mm.getCore().getTaggedImage();<br>
+				Image image1 = mm.data().convertTaggedImage(tmp);<br>
+				image1 = image1.copyAtCoords(image1.getCoords().copy().channel(0).build());<br>
+				<br>
+				mm.getCore().snapImage();<br>
+				tmp = mm.getCore().getTaggedImage();<br>
+				Image image2 = mm.data().convertTaggedImage(tmp);<br>
+				image2 = image2.copyAtCoords(image1.getCoords().copy().channel(1).build());<br>
+				<br>
+				store.putImage(image1);<br>
+				store.putImage(image2);<br>
+				store.save(Datastore.SaveMode.MULTIPAGE_TIFF, display.getName());
+                </a>
+                <br><br>
+            </span>
+
+            <table>
+                <tr>
+                    <th>
+                        Field
+                    </th>
+                    <th>
+                        Prevalence
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        file
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [String] The local script to execute
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        script
+                    </td>
+                    <td>
+                        <i>Optional</i>
+                    </td>
+                    <td>
+                        [String] The script that will be executed, with &#61; escaped with "%3D" and limited to 2000 characters
+                    </td>
+                </tr> 
+                  
+            </table>
+        </div>        
+        
         
         <div>
             <h2><a name="snapImage" href="/snap/image/">/snap/image/</a></h2>
