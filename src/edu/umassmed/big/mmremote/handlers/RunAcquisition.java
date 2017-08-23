@@ -7,7 +7,7 @@ import org.micromanager.acquisition.SequenceSettings;
 import com.google.gson.Gson;
 
 import edu.umassmed.big.mmremote.Message;
-import edu.umassmed.big.mmremote.mmKNIME;
+import edu.umassmed.big.mmremote.mmWeb;
 
 /**
  * Handle change requests.
@@ -18,7 +18,7 @@ public class RunAcquisition extends Handler {
 
 	@Override
 	protected String getResponse() throws IOException {
-		mmKNIME.core.logMessage("µmKNIME: Set MD Acquistion");
+		mmWeb.core.logMessage("µmWeb: Set MD Acquistion");
 
 		try {
 
@@ -26,34 +26,34 @@ public class RunAcquisition extends Handler {
 
 			this.message = new Message("OK");
 			if (this.params.containsKey("stop")) {
-				mmKNIME.core.logMessage("µmKNIME: Stopping all non-blocking MD Acquisitions");
-				mmKNIME.si.acquisitions().haltAcquisition();
+				mmWeb.core.logMessage("µmWeb: Stopping all non-blocking MD Acquisitions");
+				mmWeb.si.acquisitions().haltAcquisition();
 			} else {
 				if (this.params.containsKey("settings")) {
-					mmKNIME.core.logMessage("µmKNIME: Loading saved MD acquistion settings");
-					mmKNIME.si.acquisitions().loadAcquisition(this.params.get("settings").toString());
+					mmWeb.core.logMessage("µmWeb: Loading saved MD acquistion settings");
+					mmWeb.si.acquisitions().loadAcquisition(this.params.get("settings").toString());
 				}
 
-				final SequenceSettings settings = mmKNIME.ModifyAcquisitionSettings(this.params);
+				final SequenceSettings settings = mmWeb.ModifyAcquisitionSettings(this.params);
 
 				if (this.params.containsKey("run")) {
 					// mmKNIME.si.acquisitions().runAcquisitionNonblocking();
 					if (this.params.containsKey("blocking")) {
 						if (this.params.get("blocking").toString().equalsIgnoreCase("false")) {
-							mmKNIME.core.logMessage("µmKNIME: Running a non-blocking MD acquisition");
+							mmWeb.core.logMessage("µmWeb: Running a non-blocking MD acquisition");
 							bBlocking = false;
 						} else {
-							mmKNIME.core.logMessage("µmKNIME: Running a blocking MD acquisition");
+							mmWeb.core.logMessage("µmWeb: Running a blocking MD acquisition");
 							bBlocking = true;
 						}
 					}
-					mmKNIME.si.acquisitions().runAcquisitionWithSettings(settings, bBlocking);
+					mmWeb.si.acquisitions().runAcquisitionWithSettings(settings, bBlocking);
 				}
 			}
 
 		} catch (final Exception e) {
 			this.message = new Message("ERROR");
-			mmKNIME.si.getLogManager().showError(e);
+			mmWeb.si.getLogManager().showError(e);
 		}
 		final Gson gson = new Gson();
 		final String response = gson.toJson(this.message);

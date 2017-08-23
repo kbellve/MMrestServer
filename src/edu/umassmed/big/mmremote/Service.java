@@ -6,7 +6,6 @@ import java.net.InetSocketAddress;
 import com.sun.net.httpserver.HttpServer;
 
 import edu.umassmed.big.mmremote.handlers.BusyHandler;
-//import edu.umassmed.big.mmremote.handlers.ImageGetHandler;
 import edu.umassmed.big.mmremote.handlers.GetImage;
 import edu.umassmed.big.mmremote.handlers.GetProperty;
 import edu.umassmed.big.mmremote.handlers.IndexHandler;

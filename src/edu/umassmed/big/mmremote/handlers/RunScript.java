@@ -8,7 +8,7 @@ import java.io.IOException;
 import com.google.gson.Gson;
 
 import edu.umassmed.big.mmremote.Message;
-import edu.umassmed.big.mmremote.mmKNIME;
+import edu.umassmed.big.mmremote.mmWeb;
 
 /**
  * Handle change requests.
@@ -22,7 +22,7 @@ public class RunScript extends Handler {
 
 	@Override
 	protected String getResponse() throws IOException {
-		mmKNIME.core.logMessage("µmKNIME: Creating an ROI.");
+		mmWeb.core.logMessage("µmWeb: Creating an ROI.");
 
 		try {
 			this.message = new Message("OK");
@@ -35,10 +35,10 @@ public class RunScript extends Handler {
 				System.out.println(file);
 				final File ScriptFile = new File(file);
 				if (ScriptFile.exists()) {
-					mmKNIME.core.logMessage("µmKNIME: Executing script " + ScriptFile);
-					mmKNIME.si.getScriptController().runFile(ScriptFile);
+					mmWeb.core.logMessage("µmWeb: Executing script " + ScriptFile);
+					mmWeb.si.getScriptController().runFile(ScriptFile);
 				} else {
-					mmKNIME.core.logMessage("µmKNIME: Script file does not exist");
+					mmWeb.core.logMessage("µmWeb: Script file does not exist");
 				}
 			}
 			if (this.params.containsKey("script")) {
@@ -52,11 +52,11 @@ public class RunScript extends Handler {
 				out.close();
 
 				if (ScriptFile.exists()) {
-					mmKNIME.core.logMessage("µmKNIME: Executing script " + script);
-					mmKNIME.core.logMessage("µmKNIME: Executing script " + ScriptFile);
-					mmKNIME.si.getScriptController().runFile(ScriptFile);
+					mmWeb.core.logMessage("µmWeb: Executing script " + script);
+					mmWeb.core.logMessage("µmWeb: Executing script " + ScriptFile);
+					mmWeb.si.getScriptController().runFile(ScriptFile);
 				} else {
-					mmKNIME.core.logMessage("µmKNIME: Script file does not exist");
+					mmWeb.core.logMessage("µmWeb: Script file does not exist");
 				}
 			}
 
@@ -66,7 +66,7 @@ public class RunScript extends Handler {
 		} catch (final Exception e) {
 			this.message = new Message("ERROR");
 			this.message.error = "Could not handle SET Script request.";
-			mmKNIME.si.getLogManager().showError(e);
+			mmWeb.si.getLogManager().showError(e);
 		}
 		final Gson gson = new Gson();
 		final String response = gson.toJson(this.message);

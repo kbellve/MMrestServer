@@ -1,75 +1,69 @@
 package edu.umassmed.big.mmremote.handlers;
 
+import java.io.IOException;
+
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 
 import edu.umassmed.big.mmremote.Message;
-import edu.umassmed.big.mmremote.mmKNIME;
+import edu.umassmed.big.mmremote.mmWeb;
 import mmcorej.StrVector;
 
-import java.io.IOException;
-
-
 /**
- *  Handle change requests.
- * 
- *  @author kdb
+ * Handle change requests.
+ *
+ * @author kdb
  */
 public class GetProperty extends Handler {
 
-    
-    @Override
-    protected String getResponse() throws IOException {
-        mmKNIME.core.logMessage("µmKNIME: Generating GET response.");
-        
-        try {
-            message         		= new Message("OK");
-            LinkedTreeMap   map     = new LinkedTreeMap();            
-            String      	value;
-            
-            // return all properties
-            if (params.containsKey("device") && !params.containsKey("property")) 
-            {	
-            	String device        	= params.get("device").toString();
-	            
-	            StrVector   properties  = mmKNIME.core.getDevicePropertyNames(device);
-	            
-	            for (String property : properties) {
-	                value = mmKNIME.core.getProperty(device, property);
-	                map.put(property, value);
-	            }
-	            message.payload.put(device, map);
-	        }
-            else {	
-	            // or just return a specific property
-	            if (!params.containsKey("device") || !params.containsKey("property"))
-	                throw new MissingKeyException();
-	        
-	            else {
-		            String device		= params.get("device").toString();
-		            String property    	= params.get("property").toString();
-		             
-		            value = mmKNIME.core.getProperty(device, property);
-		            map.put(property, value);
-		            
-		            message.payload.put(device, map);
-	            }
-            }
-            
-            
-        } catch (MissingKeyException e) {
-            message         = new Message("ERROR");
-            message.error   = "GetProperty requests require the fields 'device', and 'property to be set.";
-        } catch (Exception e) {
-            message         = new Message("ERROR");
-            message.error   = "Could not handle GET request.";
-            mmKNIME.si.getLogManager().showError(e);
-        }
-        Gson gson           = new Gson();
-        String response     = gson.toJson(message);
-        return response;        
-    }
- 
-    
-    private class MissingKeyException extends Exception { }
+	private class MissingKeyException extends Exception {
+	}
+
+	@Override
+	protected String getResponse() throws IOException {
+		mmWeb.core.logMessage("µmWeb: Generating GET response.");
+
+		try {
+			this.message = new Message("OK");
+			final LinkedTreeMap map = new LinkedTreeMap();
+			String value;
+
+			// return all properties
+			if (this.params.containsKey("device") && !this.params.containsKey("property")) {
+				final String device = this.params.get("device").toString();
+
+				final StrVector properties = mmWeb.core.getDevicePropertyNames(device);
+
+				for (final String property : properties) {
+					value = mmWeb.core.getProperty(device, property);
+					map.put(property, value);
+				}
+				this.message.payload.put(device, map);
+			} else {
+				// or just return a specific property
+				if (!this.params.containsKey("device") || !this.params.containsKey("property")) {
+					throw new MissingKeyException();
+				} else {
+					final String device = this.params.get("device").toString();
+					final String property = this.params.get("property").toString();
+
+					value = mmWeb.core.getProperty(device, property);
+					map.put(property, value);
+
+					this.message.payload.put(device, map);
+				}
+			}
+
+		} catch (final MissingKeyException e) {
+			this.message = new Message("ERROR");
+			this.message.error = "GetProperty requests require the fields 'device', and 'property to be set.";
+		} catch (final Exception e) {
+			this.message = new Message("ERROR");
+			this.message.error = "Could not handle GET request.";
+			mmWeb.si.getLogManager().showError(e);
+		}
+		final Gson gson = new Gson();
+		final String response = gson.toJson(this.message);
+		return response;
+	}
 }

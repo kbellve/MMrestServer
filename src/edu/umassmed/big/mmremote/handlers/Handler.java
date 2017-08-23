@@ -8,7 +8,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import edu.umassmed.big.mmremote.Message;
-import edu.umassmed.big.mmremote.mmKNIME;
+import edu.umassmed.big.mmremote.mmWeb;
 
 /**
  * Handle GET (retrieval) requests. These should never modify anything, only
@@ -26,7 +26,7 @@ abstract public class Handler implements HttpHandler {
 
 	@Override
 	public void handle(final HttpExchange exchange) throws IOException {
-		mmKNIME.core.logMessage("µmKNIME: Handling request.");
+		mmWeb.core.logMessage("µmKNIME: Handling request.");
 		this.params = (Map<String, Object>) exchange.getAttribute("parameters");
 		final String response = this.getResponse();
 		exchange.sendResponseHeaders(200, response.length());

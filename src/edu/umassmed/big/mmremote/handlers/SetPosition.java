@@ -1,81 +1,83 @@
 package edu.umassmed.big.mmremote.handlers;
 
+import java.io.IOException;
+
 import com.google.gson.Gson;
 
 import edu.umassmed.big.mmremote.Message;
-import edu.umassmed.big.mmremote.mmKNIME;
-
-import java.io.IOException;
+import edu.umassmed.big.mmremote.mmWeb;
 
 /**
- *  Handle change requests.
- * 
- *  @author kdb
+ * Handle change requests.
+ *
+ * @author kdb
  */
 public class SetPosition extends Handler {
 
-    
-    @Override
-    protected String getResponse() throws IOException {
-    	mmKNIME.core.logMessage("µmKNIME: Generating SET X, Y or Z position response.");
-        
-        Double dXpos = 0.0,dYpos = 0.0,dZpos = 0.0;
-        
-        try {
-            message         = new Message("OK");
-            if (!params.containsKey("x") && !params.containsKey("y") && !params.containsKey("z")
-            		&& !params.containsKey("Home") && !params.containsKey("Origin"))
-                throw new MissingKeyException();
-           
-            
-            dXpos = mmKNIME.core.getXPosition();
-            dYpos = mmKNIME.core.getYPosition();
-            dZpos = mmKNIME.core.getPosition();
-            
-            if (params.containsKey("X")) {
-            	dXpos  = Double.parseDouble(params.get("x").toString());
-            	mmKNIME.core.logMessage("µmKNIME: Setting X Postion to: " + dXpos);
-            	mmKNIME.core.setXYPosition(dXpos, dYpos);
-            }
-            if (params.containsKey("Y")) {
-            	dYpos  = Double.parseDouble(params.get("y").toString());
-            	mmKNIME.core.logMessage("µmKNIME: Setting Y Postion to: " + dYpos);
-            	mmKNIME.core.setXYPosition(dXpos, dYpos);
-            }
-            if (params.containsKey("Z")) {
-            	dZpos  = Double.parseDouble(params.get("z").toString());
-            	mmKNIME.core.logMessage("µmKNIME: Setting Z Postion to: " + dZpos);
-            	mmKNIME.core.setPosition(dZpos);
-            }
-            
-            if (params.containsKey("Home")) {
-            	if (params.get("Home").toString() == "xy")
-            		mmKNIME.core.home(mmKNIME.core.getXYStageDevice());
-            	if (params.get("Home").toString() == "z")
-            		mmKNIME.core.home(mmKNIME.core.getFocusDevice());
-            }
-            
-            if (params.containsKey("Origin")) {
-            	if (params.get("Origin").toString() == "xy")
-            		mmKNIME.core.setOriginXY();
-            	if (params.get("Origin").toString() == "z")
-            		mmKNIME.core.setOrigin();
-            }
-        
-            
-        } catch (MissingKeyException e) {
-            message         = new Message("ERROR");
-            message.error   = "SetPosition requests requires either the fields 'x', 'y', 'z','HOME' or 'ORIGIN' to be set.";
-        } catch (Exception e) {
-            message         = new Message("ERROR");
-            message.error   = "Could not handle SET POSITION request.";
-            mmKNIME.si.getLogManager().showError(e);
-        }
-        Gson gson           = new Gson();
-        String response     = gson.toJson(message);
-        return response;        
-    }
- 
-    
-    private class MissingKeyException extends Exception { }
+	private class MissingKeyException extends Exception {
+	}
+
+	@Override
+	protected String getResponse() throws IOException {
+		mmWeb.core.logMessage("µmWeb: Generating SET X, Y or Z position response.");
+
+		Double dXpos = 0.0, dYpos = 0.0, dZpos = 0.0;
+
+		try {
+			this.message = new Message("OK");
+			if (!this.params.containsKey("x") && !this.params.containsKey("y") && !this.params.containsKey("z")
+					&& !this.params.containsKey("Home") && !this.params.containsKey("Origin")) {
+				throw new MissingKeyException();
+			}
+
+			dXpos = mmWeb.core.getXPosition();
+			dYpos = mmWeb.core.getYPosition();
+			dZpos = mmWeb.core.getPosition();
+
+			if (this.params.containsKey("X")) {
+				dXpos = Double.parseDouble(this.params.get("x").toString());
+				mmWeb.core.logMessage("µmWeb: Setting X Postion to: " + dXpos);
+				mmWeb.core.setXYPosition(dXpos, dYpos);
+			}
+			if (this.params.containsKey("Y")) {
+				dYpos = Double.parseDouble(this.params.get("y").toString());
+				mmWeb.core.logMessage("µmWeb: Setting Y Postion to: " + dYpos);
+				mmWeb.core.setXYPosition(dXpos, dYpos);
+			}
+			if (this.params.containsKey("Z")) {
+				dZpos = Double.parseDouble(this.params.get("z").toString());
+				mmWeb.core.logMessage("µmWeb: Setting Z Postion to: " + dZpos);
+				mmWeb.core.setPosition(dZpos);
+			}
+
+			if (this.params.containsKey("Home")) {
+				if (this.params.get("Home").toString() == "xy") {
+					mmWeb.core.home(mmWeb.core.getXYStageDevice());
+				}
+				if (this.params.get("Home").toString() == "z") {
+					mmWeb.core.home(mmWeb.core.getFocusDevice());
+				}
+			}
+
+			if (this.params.containsKey("Origin")) {
+				if (this.params.get("Origin").toString() == "xy") {
+					mmWeb.core.setOriginXY();
+				}
+				if (this.params.get("Origin").toString() == "z") {
+					mmWeb.core.setOrigin();
+				}
+			}
+
+		} catch (final MissingKeyException e) {
+			this.message = new Message("ERROR");
+			this.message.error = "SetPosition requests requires either the fields 'x', 'y', 'z','HOME' or 'ORIGIN' to be set.";
+		} catch (final Exception e) {
+			this.message = new Message("ERROR");
+			this.message.error = "Could not handle SET POSITION request.";
+			mmWeb.si.getLogManager().showError(e);
+		}
+		final Gson gson = new Gson();
+		final String response = gson.toJson(this.message);
+		return response;
+	}
 }

@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-import edu.umassmed.big.mmremote.mmKNIME;
+import edu.umassmed.big.mmremote.mmWeb;
 import ij.ImagePlus;
 
 /**
@@ -32,7 +32,7 @@ abstract public class ImageHandler implements HttpHandler {
 	public void handle(final HttpExchange exchange) throws IOException {
 
 		try {
-			mmKNIME.core.logMessage("µmKNIME: Image Handling request.");
+			mmWeb.core.logMessage("µmKNIME: Image Handling request.");
 			this.params = (Map<String, Object>) exchange.getAttribute("parameters");
 
 			final ImagePlus image = this.getResponse();
@@ -59,7 +59,7 @@ abstract public class ImageHandler implements HttpHandler {
 
 			exchange.close();
 		} catch (final Exception e) {
-			mmKNIME.si.getLogManager().showError(e);
+			mmWeb.si.getLogManager().showError(e);
 		}
 
 	}

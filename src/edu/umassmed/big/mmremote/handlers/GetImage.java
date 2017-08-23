@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.micromanager.data.Coords;
 import org.micromanager.display.DisplayWindow;
 
-import edu.umassmed.big.mmremote.mmKNIME;
+import edu.umassmed.big.mmremote.mmWeb;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
 
@@ -21,21 +21,21 @@ public class GetImage extends ImageHandler {
 	@Override
 	public ImagePlus getResponse() throws IOException {
 
-		DisplayWindow display = mmKNIME.findDisplay(this.params);
+		DisplayWindow display = mmWeb.findDisplay(this.params);
 		ImageProcessor imageprocessor = null;
 		ImagePlus imageplus = null;
 
 		try {
 			if (display == null) {
-				display = mmKNIME.si.getSnapLiveManager().getDisplay();
+				display = mmWeb.si.getSnapLiveManager().getDisplay();
 			}
 
-			final Coords coord = mmKNIME.createCoordinates(this.params);
+			final Coords coord = mmWeb.createCoordinates(this.params);
 			if (coord != null) {
 				display.setDisplayedImageTo(coord);
-				imageprocessor = mmKNIME.si.data().ij().createProcessor(display.getDatastore().getImage(coord));
+				imageprocessor = mmWeb.si.data().ij().createProcessor(display.getDatastore().getImage(coord));
 			} else {
-				imageprocessor = mmKNIME.si.data().ij().createProcessor(display.getDatastore().getAnyImage());
+				imageprocessor = mmWeb.si.data().ij().createProcessor(display.getDatastore().getAnyImage());
 			}
 
 			if (imageprocessor != null) {
@@ -45,7 +45,7 @@ public class GetImage extends ImageHandler {
 				}
 			}
 		} catch (final Exception e) {
-			mmKNIME.si.getLogManager().showError(e);
+			mmWeb.si.getLogManager().showError(e);
 		}
 
 		return null;

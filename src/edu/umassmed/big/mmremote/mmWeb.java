@@ -26,14 +26,14 @@ import mmcorej.CMMCore;
  */
 
 @Plugin(type = MenuPlugin.class)
-public class mmKNIME implements MenuPlugin, SciJavaPlugin {
+public class mmWeb implements MenuPlugin, SciJavaPlugin {
 
 	public static CMMCore core;
-	public static final String menuName = "µmKNIME";
+	public static final String menuName = "µmWeb";
 
 	// Provides access to the MicroManager API.
 	public static Studio si;
-	public static final String tooltipDescription = "Web Gateway between KNIME and µManager";
+	public static final String tooltipDescription = "Web Gateway between the web and µManager";
 
 	public static Coords createCoordinates(final Map<String, Object> params) throws IOException {
 
@@ -47,7 +47,7 @@ public class mmKNIME implements MenuPlugin, SciJavaPlugin {
 
 			if (params.containsKey("z") || params.containsKey("time") || params.containsKey("channel")
 					|| params.containsKey("position")) {
-				mmKNIME.core.logMessage("µmKNIME: Created coordinates");
+				mmWeb.core.logMessage("µmWeb: Created coordinates");
 
 				if (params.containsKey("z")) {
 					z = Integer.parseInt(params.get("z").toString());
@@ -62,13 +62,13 @@ public class mmKNIME implements MenuPlugin, SciJavaPlugin {
 					position = Integer.parseInt(params.get("position").toString());
 				}
 
-				Coords.CoordsBuilder builder = mmKNIME.si.data().getCoordsBuilder();
+				Coords.CoordsBuilder builder = mmWeb.si.data().getCoordsBuilder();
 				builder = builder.z(z).time(time).channel(channel).stagePosition(position);
 				return (builder.build());
 			}
 
 		} catch (final Exception e) {
-			mmKNIME.si.getLogManager().showError(e);
+			mmWeb.si.getLogManager().showError(e);
 		}
 
 		return null;
@@ -111,25 +111,25 @@ public class mmKNIME implements MenuPlugin, SciJavaPlugin {
 				if (params.containsKey("directory")) {
 					sDirectory = params.get("directory").toString();
 				}
-				store = mmKNIME.si.data().createMultipageTIFFDatastore(sDirectory, bMetadata, bSplit);
-				mmKNIME.core.logMessage("µmKNIME: Created a Multipage TIFF datastore");
+				store = mmWeb.si.data().createMultipageTIFFDatastore(sDirectory, bMetadata, bSplit);
+				mmWeb.core.logMessage("µmWeb: Created a Multipage TIFF datastore");
 			} else if (params.containsKey("singletiff")) {
 				if (params.containsKey("directory")) {
 					sDirectory = params.get("directory").toString();
 				}
-				store = mmKNIME.si.data().createSinglePlaneTIFFSeriesDatastore(sDirectory);
-				mmKNIME.core.logMessage("µmKNIME: Created a Single Plane TIFF datastore");
+				store = mmWeb.si.data().createSinglePlaneTIFFSeriesDatastore(sDirectory);
+				mmWeb.core.logMessage("µmWeb: Created a Single Plane TIFF datastore");
 
 			} else { // default data store
-				store = mmKNIME.si.data().createRAMDatastore();
-				mmKNIME.core.logMessage("µmKNIME: Created a RAM datastore");
+				store = mmWeb.si.data().createRAMDatastore();
+				mmWeb.core.logMessage("µmWeb: Created a RAM datastore");
 			}
 
 			if (store != null) {
 				if (bManage == true) {
 					// DisplayWindow display;
 					// display = mmKNIME.si.displays().createDisplay(store);
-					mmKNIME.si.displays().manage(store);
+					mmWeb.si.displays().manage(store);
 				}
 			} else {
 				throw new org.micromanager.internal.utils.MMException("Failed to create Datastore");
@@ -138,7 +138,7 @@ public class mmKNIME implements MenuPlugin, SciJavaPlugin {
 			return store;
 
 		} catch (final Exception e) {
-			mmKNIME.si.getLogManager().showError(e);
+			mmWeb.si.getLogManager().showError(e);
 		}
 
 		return null;
@@ -156,21 +156,21 @@ public class mmKNIME implements MenuPlugin, SciJavaPlugin {
 			if (params.containsKey("title")) {
 				// lets try and find window matching title and use that as a
 				// display
-				final Iterator ImageWindow = mmKNIME.si.getDisplayManager().getAllImageWindows().iterator();
+				final Iterator ImageWindow = mmWeb.si.getDisplayManager().getAllImageWindows().iterator();
 
 				while (ImageWindow.hasNext()) {
 					display = (DisplayWindow) ImageWindow.next();
 					if (params.get("title").toString().equals(display.getName())) {
-						mmKNIME.core.logMessage("µmKNIME: Found Display Window matching title.");
+						mmWeb.core.logMessage("µmWeb: Found Display Window matching title.");
 						return (display);
 					} else {
 						display = null;
-						mmKNIME.core.logMessage("µmKNIME: Failed to find Display Window matching title.");
+						mmWeb.core.logMessage("µmWeb: Failed to find Display Window matching title.");
 					}
 				}
 			}
 		} catch (final Exception e) {
-			mmKNIME.si.getLogManager().showError(e);
+			mmWeb.si.getLogManager().showError(e);
 		}
 
 		return null;
@@ -179,7 +179,7 @@ public class mmKNIME implements MenuPlugin, SciJavaPlugin {
 
 	public static SequenceSettings ModifyAcquisitionSettings(final Map<String, Object> params) throws IOException {
 
-		final SequenceSettings settings = mmKNIME.si.acquisitions().getAcquisitionSettings();
+		final SequenceSettings settings = mmWeb.si.acquisitions().getAcquisitionSettings();
 
 		try {
 
@@ -190,12 +190,12 @@ public class mmKNIME implements MenuPlugin, SciJavaPlugin {
 			if (settings != null) {
 				if (params.containsKey("root")) {
 					settings.root = params.get("root").toString();
-					mmKNIME.core.logMessage("µmKNIME: root " + settings.root);
+					mmWeb.core.logMessage("µmWeb: root " + settings.root);
 				}
 
 				if (params.containsKey("prefix")) {
 					settings.prefix = params.get("prefix").toString();
-					mmKNIME.core.logMessage("µmKNIME: prefix " + settings.prefix);
+					mmWeb.core.logMessage("µmWeb: prefix " + settings.prefix);
 				}
 
 				if (params.containsKey("comment")) {
@@ -268,16 +268,16 @@ public class mmKNIME implements MenuPlugin, SciJavaPlugin {
 				/*
 				 * if (params.containsKey("z")) { final Object obj =
 				 * params.get("z"); settings.slices.clear(); if (obj instanceof
-				 * List<?>) { mmKNIME.core.logMessage("µmKNIME: List: " +
+				 * List<?>) { mmKNIME.core.logMessage("µmWeb: List: " +
 				 * ((List<String>) obj).size());
 				 *
 				 * for (int x = 0; x < ((List<String>) obj).size(); x++) {
-				 * mmKNIME.core.logMessage("µmKNIME: List: " + ((List<String>)
+				 * mmKNIME.core.logMessage("µmWeb: List: " + ((List<String>)
 				 * obj).get(x).toString());
 				 *
 				 * settings.slices.add(Double.parseDouble(((List<String>)
 				 * obj).get(x).toString())); } } else if (obj instanceof String)
-				 * { mmKNIME.core.logMessage("µmKNIME: String");
+				 * { mmKNIME.core.logMessage("µmWeb: String");
 				 * settings.slices.add(Double.parseDouble(params.get("z").
 				 * toString())); }
 				 *
@@ -294,15 +294,15 @@ public class mmKNIME implements MenuPlugin, SciJavaPlugin {
 							+ Double.parseDouble(params.get("startZ").toString()));
 					settings.slices.add(Double.parseDouble(params.get("endZ").toString()));
 				} else if (params.containsKey("startZ") || params.containsKey("endZ") || params.containsKey("stepZ")) {
-					mmKNIME.core.logMessage("µmKNIME: must pass startZ, endZ and stepZ");
+					mmWeb.core.logMessage("µmWeb: must pass startZ, endZ and stepZ");
 				}
 
-				mmKNIME.core.logMessage("µmKNIME: Resetting modified settings");
-				mmKNIME.si.acquisitions().setAcquisitionSettings(settings);
+				mmWeb.core.logMessage("µmWeb: Resetting modified settings");
+				mmWeb.si.acquisitions().setAcquisitionSettings(settings);
 			}
 
 		} catch (final Exception e) {
-			mmKNIME.si.getLogManager().showError(e);
+			mmWeb.si.getLogManager().showError(e);
 		}
 
 		return settings;
@@ -315,12 +315,12 @@ public class mmKNIME implements MenuPlugin, SciJavaPlugin {
 
 	@Override
 	public String getHelpText() {
-		return mmKNIME.tooltipDescription;
+		return mmWeb.tooltipDescription;
 	}
 
 	@Override
 	public String getName() {
-		return mmKNIME.menuName;
+		return mmWeb.menuName;
 	}
 
 	@Override
@@ -335,18 +335,18 @@ public class mmKNIME implements MenuPlugin, SciJavaPlugin {
 
 	@Override
 	public void onPluginSelected() {
-		mmKNIME.core.logMessage("µmKNIME: Ready for control by KNIME, active on port 8000.");
+		mmWeb.core.logMessage("µmWeb: Ready for control by the web, active on port 8000.");
 		try {
 			Service.start();
 		} catch (final Exception e) {
-			mmKNIME.si.getLogManager().logError(e);
+			mmWeb.si.getLogManager().logError(e);
 		}
 	}
 
 	@Override
 	public void setContext(final Studio studio) {
-		mmKNIME.si = studio;
-		mmKNIME.core = studio.getCMMCore();
+		mmWeb.si = studio;
+		mmWeb.core = studio.getCMMCore();
 	}
 
 }

@@ -17,11 +17,11 @@ A (very) basic **RESTserver** for [MicroManager](https://micro-manager.org/).
 There are two ways to use this:
 
 * Use the precompiled .jar directly.
-    Download the [/dist/µmKNIME.jar](https://github.com/kbellve/MMrestServer/blob/master/dist/%C2%B5mKNIME.jar) and place it in your MicroManager plugins folder. 
+    Download the [/dist/µmKNIME.jar](https://github.com/kbellve/MMrestServer/blob/master/dist/%C2%B5mWeb.jar) and place it in your MicroManager plugins folder. 
     Normally, this would be somewhere like /micro-manager/mmplugins/
 
 
-Once the plugin is in place, it needs to be activated after MicroManager is started by going to the Plugins->Beta menu option and selecting **µmKNIME**. 
+Once the plugin is in place, it needs to be activated after MicroManager is started by going to the Plugins->Beta menu option and selecting **µmWeb**. 
 No dialogue is currently shown, though the console output should list whether the REST server has become active.
 
 ## Consuming the REST service
