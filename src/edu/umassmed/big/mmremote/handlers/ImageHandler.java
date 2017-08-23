@@ -32,7 +32,7 @@ abstract public class ImageHandler implements HttpHandler {
 	public void handle(final HttpExchange exchange) throws IOException {
 
 		try {
-			mmWeb.core.logMessage("µmKNIME: Image Handling request.");
+			mmWeb.core.logMessage("µmWeb: Image Handling request.");
 			this.params = (Map<String, Object>) exchange.getAttribute("parameters");
 
 			final ImagePlus image = this.getResponse();

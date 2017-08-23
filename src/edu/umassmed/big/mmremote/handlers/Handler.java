@@ -26,7 +26,7 @@ abstract public class Handler implements HttpHandler {
 
 	@Override
 	public void handle(final HttpExchange exchange) throws IOException {
-		mmWeb.core.logMessage("µmKNIME: Handling request.");
+		mmWeb.core.logMessage("µmWeb: Handling request.");
 		this.params = (Map<String, Object>) exchange.getAttribute("parameters");
 		final String response = this.getResponse();
 		exchange.sendResponseHeaders(200, response.length());
