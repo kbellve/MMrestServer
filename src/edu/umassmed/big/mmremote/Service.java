@@ -6,6 +6,8 @@ import java.net.InetSocketAddress;
 import com.sun.net.httpserver.HttpServer;
 
 import edu.umassmed.big.mmremote.handlers.BusyHandler;
+import edu.umassmed.big.mmremote.handlers.CopyImage;
+import edu.umassmed.big.mmremote.handlers.GetAcquisition;
 import edu.umassmed.big.mmremote.handlers.GetImage;
 import edu.umassmed.big.mmremote.handlers.GetProperty;
 import edu.umassmed.big.mmremote.handlers.IndexHandler;
@@ -63,6 +65,7 @@ public class Service {
 
 		// POST -> Tells µManager to acquire an image
 		(this.server.createContext("/snap/image/", new SnapImageHandler())).getFilters().add(new ParameterFilter());
+		(this.server.createContext("/copy/image/", new CopyImage())).getFilters().add(new ParameterFilter());
 
 		// SET / GET request handlers:
 		(this.server.createContext("/get/busy/", new BusyHandler())).getFilters().add(new ParameterFilter());
@@ -73,6 +76,7 @@ public class Service {
 		(this.server.createContext("/set/position/", new SetPosition())).getFilters().add(new ParameterFilter());
 		(this.server.createContext("/set/ROI/", new SetROI())).getFilters().add(new ParameterFilter());
 
+		(this.server.createContext("/get/acquisition/", new GetAcquisition())).getFilters().add(new ParameterFilter());
 		(this.server.createContext("/run/acquisition/", new RunAcquisition())).getFilters().add(new ParameterFilter());
 		(this.server.createContext("/run/script/", new RunScript())).getFilters().add(new ParameterFilter());
 	}
